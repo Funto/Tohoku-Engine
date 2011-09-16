@@ -1,0 +1,95 @@
+Shadow mapping
+==============
+
+// ---------------------------------------------------------------------
+Application:
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
+
+NB1: glTexParameteri(Xxx, GL_DEPTH_TEXTURE_MODE, Xxx) is deprecated
+
+D_ref: parameter given to texture() and other texture lookup functions
+D_t:   depth texture value
+r:     result
+
+Important:
+set:
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+Default values:
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_NONE);	// -> r = D_t
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
+
+GL_LEQUAL:   r = float(D_ref <= D_t);
+GL_GEQUAL:   r = float(D_ref >= D_t);
+GL_LESS
+GL_GREATER
+GL_EQUAL
+GL_NOTEQUAL
+GL_ALWAYS:   r = 1.0;
+GL_NEVER:    r = 0.0;
+
+GL_COMPARE_R_TO_TEXTURE == GL_COMPARE_REF_TO_TEXTURE (but R version is deprecated)
+
+shadow_matrix = bias_matrix * light_proj * light_view * model_matrix;
+
+// ---------------------------------------------------------------------
+Vertex shader:
+
+uniform mat4 shadow_matrix;
+
+var_shadow_texcoords = shadow_matrix * vertex_pos;
+
+// ---------------------------------------------------------------------
+Fragment shader:
+
+uniform sampler2DShadow shadow_map;
+
+float texture(     sampler2DShadow sampler, vec3 P, float bias=0.0 );
+// NB: P.z == D_ref for the comparison function
+
+float textureProj( sampler2DShadow sampler, vec4 P, float bias=0.0 )
+{
+	vec3 P_proj = vec3(P.x / P.w,
+	                   P.y / P.w,
+	                   P.z / P.w);	// P.z / P.w == P_proj.z == D_ref
+	return texture(sampler, P_proj, bias);
+}
+
+Note:
+====
+P_proj.z is in the range [-1.0, 1.0]
+(-1.0 if z == z_near, 1.0 if z == z_far)
+
+We compare P_proj.z when brought back to the [0.0, 1.0] range
+and the value of the texel (D_t), which is as well in the range [0.0, 1.0].
+
+==============================================
+// GL_LEQUAL -> r = float(D_ref <= D_t)
+// D_ref: dist(fragment, light)
+// D_t:   shadow map texel == dist(closest point, light)
+
+float lit = textureProj(shadow_map, var_shadow_texcoords);
+
+Method 1:
+========
+if(lit == 1.0)
+	frag_color = phong(...);
+
+Method 2:
+========
+frag_color = lit * phong(...);
+
+// ---------------------------------------------------------------------
+Tip:
+
+When rendering the shadow map: only render back faces,
+so that comparison is OK for lit faces.
+As for back faces during the rendering of the shadow map,
+those are shadowed by definition.
+=> TODO: find a way to determine if a point is a backface when
+   rendered from a light.
+   -> use a normal and a dot product...
+   
+TODO: back projection

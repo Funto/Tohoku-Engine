@@ -1,0 +1,245 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{F1A3F140-5281-4471-A3F6-2AA4D69A1319}</ProjectGuid>
+    <RootNamespace>renderer</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)bin\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <TargetName>$(ProjectName)d</TargetName>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)bin\</OutDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_MBCS;GLEW_STATIC;TIXML_USE_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>glew32s.lib;opengl32.lib;pthreadVCE2.lib;glfwd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\lib</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_MBCS;GLEW_STATIC;TIXML_USE_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>glew32s.lib;opengl32.lib;pthreadVCE2.lib;glfw.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\lib</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\animators\CameraAnimator.cpp" />
+    <ClCompile Include="..\..\src\animators\FPSCameraAnimator.cpp" />
+    <ClCompile Include="..\..\src\animators\KeyboardCameraAnimator.cpp" />
+    <ClCompile Include="..\..\src\animators\LightSceneAnimator.cpp" />
+    <ClCompile Include="..\..\src\animators\SceneAnimator.cpp" />
+    <ClCompile Include="..\..\src\Application.cpp" />
+    <ClCompile Include="..\..\src\glutil\glutil.cpp" />
+    <ClCompile Include="..\..\src\glutil\GPUProgram.cpp" />
+    <ClCompile Include="..\..\src\glutil\Quad.cpp" />
+    <ClCompile Include="..\..\src\glutil\TextureCreation.cpp" />
+    <ClCompile Include="..\..\src\gui\GLFWWindow.cpp" />
+    <ClCompile Include="..\..\src\log\Log.cpp" />
+    <ClCompile Include="..\..\src\log\LogHTML.cpp" />
+    <ClCompile Include="..\..\src\log\LogRTF.cpp" />
+    <ClCompile Include="..\..\src\log\LogTermVT100.cpp" />
+    <ClCompile Include="..\..\src\log\LogTermWindows.cpp" />
+    <ClCompile Include="..\..\src\main.cpp" />
+    <ClCompile Include="..\..\src\preprocessor\ExpressionEvaluator.cpp" />
+    <ClCompile Include="..\..\src\preprocessor\Preprocessor.cpp" />
+    <ClCompile Include="..\..\src\renderer\DebugRenderer.cpp" />
+    <ClCompile Include="..\..\src\renderer\DeferredShadingRenderer.cpp" />
+    <ClCompile Include="..\..\src\renderer\DepthPeelingRenderer.cpp" />
+    <ClCompile Include="..\..\src\renderer\MultiLayerRenderer.cpp" />
+    <ClCompile Include="..\..\src\renderer\MyRenderer.cpp" />
+    <ClCompile Include="..\..\src\renderer\RasterRenderer.cpp" />
+    <ClCompile Include="..\..\src\renderer\RaytraceRenderer.cpp" />
+    <ClCompile Include="..\..\src\renderer\Renderer.cpp" />
+    <ClCompile Include="..\..\src\renderer\StencilRoutedRenderer.cpp" />
+    <ClCompile Include="..\..\src\renderer\utils\BounceMap.cpp" />
+    <ClCompile Include="..\..\src\renderer\utils\GBuffer.cpp" />
+    <ClCompile Include="..\..\src\renderer\utils\GBufferRenderer.cpp" />
+    <ClCompile Include="..\..\src\renderer\utils\GLRaytracer.cpp" />
+    <ClCompile Include="..\..\src\renderer\utils\PhotonVolumesRenderer.cpp" />
+    <ClCompile Include="..\..\src\renderer\utils\ShadowMap.cpp" />
+    <ClCompile Include="..\..\src\renderer\utils\TextureBinding.cpp" />
+    <ClCompile Include="..\..\src\renderer\utils\TextureReducer.cpp" />
+    <ClCompile Include="..\..\src\renderer\utils\TexunitManager.cpp" />
+    <ClCompile Include="..\..\src\scene\ArrayElementContainer.cpp" />
+    <ClCompile Include="..\..\src\scene\Camera.cpp" />
+    <ClCompile Include="..\..\src\scene\DAELoader.cpp" />
+    <ClCompile Include="..\..\src\scene\Element.cpp" />
+    <ClCompile Include="..\..\src\scene\ElementContainer.cpp" />
+    <ClCompile Include="..\..\src\scene\Geometry.cpp" />
+    <ClCompile Include="..\..\src\scene\GPUProgramManager.cpp" />
+    <ClCompile Include="..\..\src\scene\Light.cpp" />
+    <ClCompile Include="..\..\src\scene\Material.cpp" />
+    <ClCompile Include="..\..\src\scene\MeshObject.cpp" />
+    <ClCompile Include="..\..\src\scene\Object.cpp" />
+    <ClCompile Include="..\..\src\scene\OBJLoader.cpp" />
+    <ClCompile Include="..\..\src\scene\profiles\DepthPeelingProfile.cpp" />
+    <ClCompile Include="..\..\src\scene\profiles\GeneralProfile.cpp" />
+    <ClCompile Include="..\..\src\scene\profiles\GPUProfile.cpp" />
+    <ClCompile Include="..\..\src\scene\profiles\Profile.cpp" />
+    <ClCompile Include="..\..\src\scene\profiles\RaytraceProfile.cpp" />
+    <ClCompile Include="..\..\src\scene\Scene.cpp" />
+    <ClCompile Include="..\..\src\scene\SceneLoader.cpp" />
+    <ClCompile Include="..\..\src\scene\Sphere.cpp" />
+    <ClCompile Include="..\..\src\tinyxml\tinyxml.cpp" />
+    <ClCompile Include="..\..\src\tinyxml\tinyxmlerror.cpp" />
+    <ClCompile Include="..\..\src\tinyxml\tinyxmlparser.cpp" />
+    <ClCompile Include="..\..\src\utils\TGALoader.cpp" />
+    <ClCompile Include="..\..\src\utils\XMLManip.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\animators\CameraAnimator.h" />
+    <ClInclude Include="..\..\src\animators\FPSCameraAnimator.h" />
+    <ClInclude Include="..\..\src\animators\KeyboardCameraAnimator.h" />
+    <ClInclude Include="..\..\src\animators\LightSceneAnimator.h" />
+    <ClInclude Include="..\..\src\animators\NullSceneAnimator.h" />
+    <ClInclude Include="..\..\src\animators\SceneAnimator.h" />
+    <ClInclude Include="..\..\src\Application.h" />
+    <ClInclude Include="..\..\src\Boundaries.h" />
+    <ClInclude Include="..\..\src\Common.h" />
+    <ClInclude Include="..\..\src\CommonIndices.h" />
+    <ClInclude Include="..\..\src\Config.h" />
+    <ClInclude Include="..\..\src\Debug.h" />
+    <ClInclude Include="..\..\src\glutil\glutil.h" />
+    <ClInclude Include="..\..\src\glutil\glxw.h" />
+    <ClInclude Include="..\..\src\glutil\GPUProgram.h" />
+    <ClInclude Include="..\..\src\glutil\Hash.h" />
+    <ClInclude Include="..\..\src\glutil\Quad.h" />
+    <ClInclude Include="..\..\src\glutil\RAII.h" />
+    <ClInclude Include="..\..\src\glutil\TextureCreation.h" />
+    <ClInclude Include="..\..\src\gui\GLFWWindow.h" />
+    <ClInclude Include="..\..\src\log\Log.h" />
+    <ClInclude Include="..\..\src\log\LogHTMLContents.h" />
+    <ClInclude Include="..\..\src\log\LogRTFContents.h" />
+    <ClInclude Include="..\..\src\preprocessor\ExpressionEvaluator.h" />
+    <ClInclude Include="..\..\src\preprocessor\Preprocessor.h" />
+    <ClInclude Include="..\..\src\preprocessor\PreprocHelpers.h" />
+    <ClInclude Include="..\..\src\renderer\DebugRenderer.h" />
+    <ClInclude Include="..\..\src\renderer\DeferredShadingRenderer.h" />
+    <ClInclude Include="..\..\src\renderer\DepthPeelingRenderer.h" />
+    <ClInclude Include="..\..\src\renderer\MultiLayerRenderer.h" />
+    <ClInclude Include="..\..\src\renderer\MyRenderer.h" />
+    <ClInclude Include="..\..\src\renderer\RasterRenderer.h" />
+    <ClInclude Include="..\..\src\renderer\RaytraceRenderer.h" />
+    <ClInclude Include="..\..\src\renderer\Renderer.h" />
+    <ClInclude Include="..\..\src\renderer\StencilRoutedRenderer.h" />
+    <ClInclude Include="..\..\src\renderer\utils\BounceMap.h" />
+    <ClInclude Include="..\..\src\renderer\utils\GBuffer.h" />
+    <ClInclude Include="..\..\src\renderer\utils\GBufferRenderer.h" />
+    <ClInclude Include="..\..\src\renderer\utils\GLRaytracer.h" />
+    <ClInclude Include="..\..\src\renderer\utils\GLRaytracerConfig.h" />
+    <ClInclude Include="..\..\src\renderer\utils\PhotonVolumesRenderer.h" />
+    <ClInclude Include="..\..\src\renderer\utils\ShadowMap.h" />
+    <ClInclude Include="..\..\src\renderer\utils\TextureBinding.h" />
+    <ClInclude Include="..\..\src\renderer\utils\TextureReducer.h" />
+    <ClInclude Include="..\..\src\renderer\utils\TexunitManager.h" />
+    <ClInclude Include="..\..\src\scene\ArrayElementContainer.h" />
+    <ClInclude Include="..\..\src\scene\Camera.h" />
+    <ClInclude Include="..\..\src\scene\DAELoader.h" />
+    <ClInclude Include="..\..\src\scene\Element.h" />
+    <ClInclude Include="..\..\src\scene\ElementContainer.h" />
+    <ClInclude Include="..\..\src\scene\Geometry.h" />
+    <ClInclude Include="..\..\src\scene\GPUProgramManager.h" />
+    <ClInclude Include="..\..\src\scene\Light.h" />
+    <ClInclude Include="..\..\src\scene\LightData.h" />
+    <ClInclude Include="..\..\src\scene\Material.h" />
+    <ClInclude Include="..\..\src\scene\MeshObject.h" />
+    <ClInclude Include="..\..\src\scene\Object.h" />
+    <ClInclude Include="..\..\src\scene\OBJLoader.h" />
+    <ClInclude Include="..\..\src\scene\profiles\DepthPeelingProfile.h" />
+    <ClInclude Include="..\..\src\scene\profiles\GeneralProfile.h" />
+    <ClInclude Include="..\..\src\scene\profiles\GPUProfile.h" />
+    <ClInclude Include="..\..\src\scene\profiles\Profile.h" />
+    <ClInclude Include="..\..\src\scene\profiles\RaytraceProfile.h" />
+    <ClInclude Include="..\..\src\scene\Scene.h" />
+    <ClInclude Include="..\..\src\scene\SceneLoader.h" />
+    <ClInclude Include="..\..\src\scene\Sphere.h" />
+    <ClInclude Include="..\..\src\ShaderLocations.h" />
+    <ClInclude Include="..\..\src\tinyxml\tinyxml.h" />
+    <ClInclude Include="..\..\src\utils\AssertStatic.h" />
+    <ClInclude Include="..\..\src\utils\Clock.h" />
+    <ClInclude Include="..\..\src\utils\List.h" />
+    <ClInclude Include="..\..\src\utils\List.hpp" />
+    <ClInclude Include="..\..\src\utils\StdListManip.h" />
+    <ClInclude Include="..\..\src\utils\Stringify.h" />
+    <ClInclude Include="..\..\src\utils\StrManip.h" />
+    <ClInclude Include="..\..\src\utils\TGALoader.h" />
+    <ClInclude Include="..\..\src\utils\XMLManip.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\media\shaders\bounce_map.frag" />
+    <None Include="..\..\media\shaders\bounce_map.vert" />
+    <None Include="..\..\media\shaders\constants.shader" />
+    <None Include="..\..\media\shaders\depth_peeling.frag" />
+    <None Include="..\..\media\shaders\depth_peeling.vert" />
+    <None Include="..\..\media\shaders\fsquad.frag" />
+    <None Include="..\..\media\shaders\fsquad.vert" />
+    <None Include="..\..\media\shaders\general.frag" />
+    <None Include="..\..\media\shaders\general.vert" />
+    <None Include="..\..\media\shaders\photon_volumes.frag" />
+    <None Include="..\..\media\shaders\photon_volumes.vert" />
+    <None Include="..\..\media\shaders\render_from_gbuffer.frag" />
+    <None Include="..\..\media\shaders\render_from_gbuffer.vert" />
+    <None Include="..\..\media\shaders\render_to_shadow_map.frag" />
+    <None Include="..\..\media\shaders\render_to_shadow_map.vert" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,491 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="animators">
+      <UniqueIdentifier>{c1182291-f4ed-4e00-a724-5a9ce06f20d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gui">
+      <UniqueIdentifier>{67e0026a-d98f-48a3-905d-ac8ddfa25992}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="log">
+      <UniqueIdentifier>{fdc965ab-991a-4f39-b5ea-e388c499625c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="preprocessor">
+      <UniqueIdentifier>{8fed8e16-115e-4d04-b233-7740231be296}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="renderer">
+      <UniqueIdentifier>{ee56527a-9b1e-4add-a62c-bb79edf28523}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="renderer\utils">
+      <UniqueIdentifier>{9dc7033f-8def-4e18-8549-bbb88630828a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scenes">
+      <UniqueIdentifier>{ce7f563d-3f50-459e-bbac-e633730809c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scenes\profiles">
+      <UniqueIdentifier>{c1519834-6411-4598-925c-62feedce9d6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tinyxml">
+      <UniqueIdentifier>{b8f7961e-995c-45c4-b225-aad1afca0010}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils">
+      <UniqueIdentifier>{4815b903-fd33-4f99-9eb4-7b8beb817a55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="glutil">
+      <UniqueIdentifier>{3a58cc40-28e2-423f-a966-c597ed93fa64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shaders">
+      <UniqueIdentifier>{357726dc-eb2f-492b-8bf8-241822133058}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\animators\CameraAnimator.cpp">
+      <Filter>animators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\animators\FPSCameraAnimator.cpp">
+      <Filter>animators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\animators\KeyboardCameraAnimator.cpp">
+      <Filter>animators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\animators\LightSceneAnimator.cpp">
+      <Filter>animators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\animators\SceneAnimator.cpp">
+      <Filter>animators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\gui\GLFWWindow.cpp">
+      <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\log\Log.cpp">
+      <Filter>log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\log\LogHTML.cpp">
+      <Filter>log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\log\LogRTF.cpp">
+      <Filter>log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\log\LogTermVT100.cpp">
+      <Filter>log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\log\LogTermWindows.cpp">
+      <Filter>log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\utils\TGALoader.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\utils\XMLManip.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tinyxml\tinyxml.cpp">
+      <Filter>tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tinyxml\tinyxmlerror.cpp">
+      <Filter>tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tinyxml\tinyxmlparser.cpp">
+      <Filter>tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\ArrayElementContainer.cpp">
+      <Filter>scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\Camera.cpp">
+      <Filter>scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\DAELoader.cpp">
+      <Filter>scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\Element.cpp">
+      <Filter>scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\ElementContainer.cpp">
+      <Filter>scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\Geometry.cpp">
+      <Filter>scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\GPUProgramManager.cpp">
+      <Filter>scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\Light.cpp">
+      <Filter>scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\Material.cpp">
+      <Filter>scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\MeshObject.cpp">
+      <Filter>scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\Object.cpp">
+      <Filter>scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\OBJLoader.cpp">
+      <Filter>scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\Scene.cpp">
+      <Filter>scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\SceneLoader.cpp">
+      <Filter>scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\Sphere.cpp">
+      <Filter>scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\profiles\DepthPeelingProfile.cpp">
+      <Filter>scenes\profiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\profiles\GeneralProfile.cpp">
+      <Filter>scenes\profiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\profiles\GPUProfile.cpp">
+      <Filter>scenes\profiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\profiles\Profile.cpp">
+      <Filter>scenes\profiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\profiles\RaytraceProfile.cpp">
+      <Filter>scenes\profiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\renderer\DebugRenderer.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\renderer\DeferredShadingRenderer.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\renderer\DepthPeelingRenderer.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\renderer\MultiLayerRenderer.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\renderer\MyRenderer.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\renderer\RasterRenderer.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\renderer\RaytraceRenderer.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\renderer\Renderer.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\renderer\StencilRoutedRenderer.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\renderer\utils\BounceMap.cpp">
+      <Filter>renderer\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\renderer\utils\GBuffer.cpp">
+      <Filter>renderer\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\renderer\utils\GBufferRenderer.cpp">
+      <Filter>renderer\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\renderer\utils\GLRaytracer.cpp">
+      <Filter>renderer\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\renderer\utils\PhotonVolumesRenderer.cpp">
+      <Filter>renderer\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\renderer\utils\ShadowMap.cpp">
+      <Filter>renderer\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\renderer\utils\TextureBinding.cpp">
+      <Filter>renderer\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\renderer\utils\TextureReducer.cpp">
+      <Filter>renderer\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\renderer\utils\TexunitManager.cpp">
+      <Filter>renderer\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\preprocessor\ExpressionEvaluator.cpp">
+      <Filter>preprocessor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\preprocessor\Preprocessor.cpp">
+      <Filter>preprocessor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Application.cpp" />
+    <ClCompile Include="..\..\src\main.cpp" />
+    <ClCompile Include="..\..\src\glutil\glutil.cpp">
+      <Filter>glutil</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\glutil\GPUProgram.cpp">
+      <Filter>glutil</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\glutil\Quad.cpp">
+      <Filter>glutil</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\glutil\TextureCreation.cpp">
+      <Filter>glutil</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\animators\CameraAnimator.h">
+      <Filter>animators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\animators\FPSCameraAnimator.h">
+      <Filter>animators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\animators\KeyboardCameraAnimator.h">
+      <Filter>animators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\animators\LightSceneAnimator.h">
+      <Filter>animators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\animators\NullSceneAnimator.h">
+      <Filter>animators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\animators\SceneAnimator.h">
+      <Filter>animators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\gui\GLFWWindow.h">
+      <Filter>gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\log\Log.h">
+      <Filter>log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\log\LogHTMLContents.h">
+      <Filter>log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\log\LogRTFContents.h">
+      <Filter>log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\utils\AssertStatic.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\utils\Clock.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\utils\List.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\utils\List.hpp">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\utils\StdListManip.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\utils\Stringify.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\utils\StrManip.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\utils\TGALoader.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\utils\XMLManip.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tinyxml\tinyxml.h">
+      <Filter>tinyxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\scene\ArrayElementContainer.h">
+      <Filter>scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\scene\Camera.h">
+      <Filter>scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\scene\DAELoader.h">
+      <Filter>scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\scene\Element.h">
+      <Filter>scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\scene\ElementContainer.h">
+      <Filter>scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\scene\Geometry.h">
+      <Filter>scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\scene\GPUProgramManager.h">
+      <Filter>scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\scene\Light.h">
+      <Filter>scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\scene\LightData.h">
+      <Filter>scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\scene\Material.h">
+      <Filter>scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\scene\MeshObject.h">
+      <Filter>scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\scene\Object.h">
+      <Filter>scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\scene\OBJLoader.h">
+      <Filter>scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\scene\Scene.h">
+      <Filter>scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\scene\SceneLoader.h">
+      <Filter>scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\scene\Sphere.h">
+      <Filter>scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\scene\profiles\DepthPeelingProfile.h">
+      <Filter>scenes\profiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\scene\profiles\GeneralProfile.h">
+      <Filter>scenes\profiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\scene\profiles\GPUProfile.h">
+      <Filter>scenes\profiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\scene\profiles\Profile.h">
+      <Filter>scenes\profiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\scene\profiles\RaytraceProfile.h">
+      <Filter>scenes\profiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\renderer\DebugRenderer.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\renderer\DeferredShadingRenderer.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\renderer\DepthPeelingRenderer.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\renderer\MultiLayerRenderer.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\renderer\MyRenderer.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\renderer\RasterRenderer.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\renderer\RaytraceRenderer.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\renderer\Renderer.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\renderer\StencilRoutedRenderer.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\renderer\utils\BounceMap.h">
+      <Filter>renderer\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\renderer\utils\GBuffer.h">
+      <Filter>renderer\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\renderer\utils\GBufferRenderer.h">
+      <Filter>renderer\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\renderer\utils\GLRaytracer.h">
+      <Filter>renderer\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\renderer\utils\GLRaytracerConfig.h">
+      <Filter>renderer\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\renderer\utils\PhotonVolumesRenderer.h">
+      <Filter>renderer\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\renderer\utils\ShadowMap.h">
+      <Filter>renderer\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\renderer\utils\TextureBinding.h">
+      <Filter>renderer\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\renderer\utils\TextureReducer.h">
+      <Filter>renderer\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\renderer\utils\TexunitManager.h">
+      <Filter>renderer\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\preprocessor\ExpressionEvaluator.h">
+      <Filter>preprocessor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\preprocessor\Preprocessor.h">
+      <Filter>preprocessor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\preprocessor\PreprocHelpers.h">
+      <Filter>preprocessor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Application.h" />
+    <ClInclude Include="..\..\src\Boundaries.h" />
+    <ClInclude Include="..\..\src\Common.h" />
+    <ClInclude Include="..\..\src\CommonIndices.h" />
+    <ClInclude Include="..\..\src\Config.h" />
+    <ClInclude Include="..\..\src\Debug.h" />
+    <ClInclude Include="..\..\src\ShaderLocations.h" />
+    <ClInclude Include="..\..\src\glutil\glutil.h">
+      <Filter>glutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\glutil\glxw.h">
+      <Filter>glutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\glutil\GPUProgram.h">
+      <Filter>glutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\glutil\Hash.h">
+      <Filter>glutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\glutil\Quad.h">
+      <Filter>glutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\glutil\RAII.h">
+      <Filter>glutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\glutil\TextureCreation.h">
+      <Filter>glutil</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\media\shaders\bounce_map.frag">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="..\..\media\shaders\bounce_map.vert">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="..\..\media\shaders\constants.shader">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="..\..\media\shaders\depth_peeling.frag">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="..\..\media\shaders\depth_peeling.vert">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="..\..\media\shaders\fsquad.frag">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="..\..\media\shaders\fsquad.vert">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="..\..\media\shaders\general.frag">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="..\..\media\shaders\general.vert">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="..\..\media\shaders\photon_volumes.frag">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="..\..\media\shaders\photon_volumes.vert">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="..\..\media\shaders\render_from_gbuffer.frag">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="..\..\media\shaders\render_from_gbuffer.vert">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="..\..\media\shaders\render_to_shadow_map.frag">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="..\..\media\shaders\render_to_shadow_map.vert">
+      <Filter>shaders</Filter>
+    </None>
+  </ItemGroup>
+</Project>

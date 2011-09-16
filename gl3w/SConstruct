@@ -1,0 +1,4 @@
+env = Environment()
+env.Append(CPPPATH=['include'])
+env.Append(CCFLAGS=['-g'])
+env.StaticLibrary('gl3w', ['src/gl3w.c'])

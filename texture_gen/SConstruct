@@ -1,0 +1,1 @@
+Program('texture_gen', ['texture_gen.cpp'])

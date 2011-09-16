@@ -1,0 +1,52 @@
+TODO:
+
+- Z-prepass
+- deep deferred shading
+- deep shadow mapping (is the name correct?) -> use the alpha value in the light G-buffer
+  for translucent shadow casters
+- several bounces + Russian Roulette Sampling
+- for the fake texture reduce operation: support many rays
+	- PhotonVolumesRenderer
+- real texture reduce operation
+- resolve the problems with energy
+- transparency is not correct. When removing
+		if(texel_pixels_done.r == 1.0)
+			discard;
+		-> BUG
+	+ blending function is wrong anyway...it seems impossible to have
+	a correct blending without doing all lighting calculations this way
+- transparent objects' shadow casting is wrong
+- resolve the Z-fighting with back layers when doing shadow mapping in MultiLayerRenderer
+- material_reflectance -> ??
+- transmission map? transmission coefficient?
+- Use stencil routing in the MultiLayerRenderer
+- Sampler objects?
+- can we use a shadow sampler for the depth comparisons when tracing the rays?
+  -> probably not, as there is the z_error calculation
+- bilateral filtering
+
+- don't store position in G-buffer
+  => from Z-buffer and window coords (x,y) in [-1,1]²: multiply by inv(proj) => screen space
+- light angle attenuation
+- light distance attenuation
+- packing of normalized vectors: 2 vectors can be stored in 1 RGBA8 texture
+- texture manager
+- fix normal mapping (tangent vectors, etc)
+- use AssImp and add new scenes (Sponza...)
+
+X some class to handle additional texture bindings
+  => own them
+  => bind them
+
+X shadow mapping
+	X "visibility map" for the deferred shading ->
+	   texture(visibility_map, naninani)[0] -> is the pixel visible for the first light?
+	   (IDEA: we could use a stencil buffer and bit operations with the number of the current light)
+	X restrict lighting to the angle of the light using a dot product?
+	X debug drawing of lights using quads
+	X debug drawing of frustums for lights
+	X debug drawing of shadow maps
+	X debug DeferredShadingRenderer with shadow mapping
+	X add debug drawing of lights in DeferredShadingRenderer
+	X see http://www.opengl.org/wiki/GL_EXT_framebuffer_object : glDrawBuffer(GL_NONE) for rendering the shadow map (take care, they do not put a color attachment while it's compulsory...)
+	ABANDONNED is using a depth buffer in color attachment 0 possible? -> NO

@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA version="1.4.0" xmlns="http://www.collada.org/2005/11/COLLADASchema">
+	<asset>
+		<contributor>
+			<author>Illusoft Collada 1.4.0 plugin for Blender - http://colladablender.illusoft.com</author>
+			<authoring_tool>Blender v:249 - Illusoft Collada Exporter v:0.3.162</authoring_tool>
+			<comments></comments>
+			<copyright></copyright>
+			<source_data>file:///home/funto/tohoku/code/renderer/blender/cornell_only.blend</source_data>
+		</contributor>
+		<created>2010-07-21T13:34:53.576696</created>
+		<modified>2010-07-21T13:34:53.576725</modified>
+		<unit meter="0.01" name="centimeter"/>
+		<up_axis>Z_UP</up_axis>
+	</asset>
+	<library_cameras>
+		<camera id="Camera-Camera" name="Camera-Camera">
+			<optics>
+				<technique_common>
+					<perspective>
+						<yfov>49.13434</yfov>
+						<znear>0.1</znear>
+						<zfar>100.0</zfar>
+					</perspective>
+				</technique_common>
+			</optics>
+		</camera>
+	</library_cameras>
+	<library_lights>
+		<light id="Spot" name="Spot">
+			<technique_common>
+				<point>
+					<color>1.00000 1.00000 1.00000</color>
+					<constant_attenuation>1.0</constant_attenuation>
+					<linear_attenuation>0.0</linear_attenuation>
+					<quadratic_attenuation>0.0</quadratic_attenuation>
+				</point>
+			</technique_common>
+		</light>
+	</library_lights>
+	<library_geometries>
+		<geometry id="right_002" name="right_002">
+			<mesh>
+				<source id="right_002-Position">
+					<float_array count="12" id="right_002-Position-array">1.00000 1.00000 -1.00000 1.00000 -1.00000 -1.00000 1.00000 1.00000 1.00000 1.00000 -1.00000 1.00000</float_array>
+					<technique_common>
+						<accessor count="4" source="#right_002-Position-array" stride="3">
+							<param type="float" name="X"></param>
+							<param type="float" name="Y"></param>
+							<param type="float" name="Z"></param>
+						</accessor>
+					</technique_common>
+				</source>
+				<source id="right_002-Normals">
+					<float_array count="18" id="right_002-Normals-array">-1.00000 0.00000 0.00000 -1.00000 0.00000 0.00000 -1.00000 0.00000 0.00000 -1.00000 0.00000 0.00000 -1.00000 0.00000 0.00000 -1.00000 0.00000 0.00000</float_array>
+					<technique_common>
+						<accessor count="6" source="#right_002-Normals-array" stride="3">
+							<param type="float" name="X"></param>
+							<param type="float" name="Y"></param>
+							<param type="float" name="Z"></param>
+						</accessor>
+					</technique_common>
+				</source>
+				<vertices id="right_002-Vertex">
+					<input semantic="POSITION" source="#right_002-Position"/>
+				</vertices>
+				<triangles count="2">
+					<input offset="0" semantic="VERTEX" source="#right_002-Vertex"/>
+					<input offset="1" semantic="NORMAL" source="#right_002-Normals"/>
+					<p>0 0 1 1 3 2 3 3 2 4 0 5</p>
+				</triangles>
+			</mesh>
+		</geometry>
+		<geometry id="left_002" name="left_002">
+			<mesh>
+				<source id="left_002-Position">
+					<float_array count="12" id="left_002-Position-array">-1.00000 -1.00000 -1.00000 -1.00000 1.00000 -1.00000 -1.00000 -1.00000 1.00000 -1.00000 1.00000 1.00000</float_array>
+					<technique_common>
+						<accessor count="4" source="#left_002-Position-array" stride="3">
+							<param type="float" name="X"></param>
+							<param type="float" name="Y"></param>
+							<param type="float" name="Z"></param>
+						</accessor>
+					</technique_common>
+				</source>
+				<source id="left_002-Normals">
+					<float_array count="18" id="left_002-Normals-array">1.00000 0.00000 0.00000 1.00000 0.00000 0.00000 1.00000 0.00000 0.00000 1.00000 0.00000 0.00000 1.00000 0.00000 0.00000 1.00000 0.00000 0.00000</float_array>
+					<technique_common>
+						<accessor count="6" source="#left_002-Normals-array" stride="3">
+							<param type="float" name="X"></param>
+							<param type="float" name="Y"></param>
+							<param type="float" name="Z"></param>
+						</accessor>
+					</technique_common>
+				</source>
+				<vertices id="left_002-Vertex">
+					<input semantic="POSITION" source="#left_002-Position"/>
+				</vertices>
+				<triangles count="2">
+					<input offset="0" semantic="VERTEX" source="#left_002-Vertex"/>
+					<input offset="1" semantic="NORMAL" source="#left_002-Normals"/>
+					<p>0 0 1 1 3 2 3 3 2 4 0 5</p>
+				</triangles>
+			</mesh>
+		</geometry>
+		<geometry id="top_002" name="top_002">
+			<mesh>
+				<source id="top_002-Position">
+					<float_array count="12" id="top_002-Position-array">1.00000 1.00000 1.00000 1.00000 -1.00000 1.00000 -1.00000 -1.00000 1.00000 -1.00000 1.00000 1.00000</float_array>
+					<technique_common>
+						<accessor count="4" source="#top_002-Position-array" stride="3">
+							<param type="float" name="X"></param>
+							<param type="float" name="Y"></param>
+							<param type="float" name="Z"></param>
+						</accessor>
+					</technique_common>
+				</source>
+				<source id="top_002-Normals">
+					<float_array count="18" id="top_002-Normals-array">0.00000 0.00000 -1.00000 0.00000 0.00000 -1.00000 0.00000 0.00000 -1.00000 0.00000 0.00000 -1.00000 0.00000 0.00000 -1.00000 0.00000 0.00000 -1.00000</float_array>
+					<technique_common>
+						<accessor count="6" source="#top_002-Normals-array" stride="3">
+							<param type="float" name="X"></param>
+							<param type="float" name="Y"></param>
+							<param type="float" name="Z"></param>
+						</accessor>
+					</technique_common>
+				</source>
+				<vertices id="top_002-Vertex">
+					<input semantic="POSITION" source="#top_002-Position"/>
+				</vertices>
+				<triangles count="2">
+					<input offset="0" semantic="VERTEX" source="#top_002-Vertex"/>
+					<input offset="1" semantic="NORMAL" source="#top_002-Normals"/>
+					<p>0 0 1 1 2 2 2 3 3 4 0 5</p>
+				</triangles>
+			</mesh>
+		</geometry>
+		<geometry id="bottom_002" name="bottom_002">
+			<mesh>
+				<source id="bottom_002-Position">
+					<float_array count="12" id="bottom_002-Position-array">1.00000 1.00000 -1.00000 1.00000 -1.00000 -1.00000 -1.00000 -1.00000 -1.00000 -1.00000 1.00000 -1.00000</float_array>
+					<technique_common>
+						<accessor count="4" source="#bottom_002-Position-array" stride="3">
+							<param type="float" name="X"></param>
+							<param type="float" name="Y"></param>
+							<param type="float" name="Z"></param>
+						</accessor>
+					</technique_common>
+				</source>
+				<source id="bottom_002-Normals">
+					<float_array count="18" id="bottom_002-Normals-array">0.00000 0.00000 1.00000 0.00000 0.00000 1.00000 0.00000 0.00000 1.00000 0.00000 0.00000 1.00000 0.00000 0.00000 1.00000 0.00000 0.00000 1.00000</float_array>
+					<technique_common>
+						<accessor count="6" source="#bottom_002-Normals-array" stride="3">
+							<param type="float" name="X"></param>
+							<param type="float" name="Y"></param>
+							<param type="float" name="Z"></param>
+						</accessor>
+					</technique_common>
+				</source>
+				<vertices id="bottom_002-Vertex">
+					<input semantic="POSITION" source="#bottom_002-Position"/>
+				</vertices>
+				<triangles count="2">
+					<input offset="0" semantic="VERTEX" source="#bottom_002-Vertex"/>
+					<input offset="1" semantic="NORMAL" source="#bottom_002-Normals"/>
+					<p>0 0 3 1 2 2 2 3 1 4 0 5</p>
+				</triangles>
+			</mesh>
+		</geometry>
+		<geometry id="back_003" name="back_003">
+			<mesh>
+				<source id="back_003-Position">
+					<float_array count="12" id="back_003-Position-array">1.00000 1.00000 -1.00000 -1.00000 1.00000 -1.00000 1.00000 1.00000 1.00000 -1.00000 1.00000 1.00000</float_array>
+					<technique_common>
+						<accessor count="4" source="#back_003-Position-array" stride="3">
+							<param type="float" name="X"></param>
+							<param type="float" name="Y"></param>
+							<param type="float" name="Z"></param>
+						</accessor>
+					</technique_common>
+				</source>
+				<source id="back_003-Normals">
+					<float_array count="18" id="back_003-Normals-array">0.00000 -1.00000 0.00000 0.00000 -1.00000 0.00000 0.00000 -1.00000 0.00000 0.00000 -1.00000 0.00000 0.00000 -1.00000 0.00000 0.00000 -1.00000 0.00000</float_array>
+					<technique_common>
+						<accessor count="6" source="#back_003-Normals-array" stride="3">
+							<param type="float" name="X"></param>
+							<param type="float" name="Y"></param>
+							<param type="float" name="Z"></param>
+						</accessor>
+					</technique_common>
+				</source>
+				<vertices id="back_003-Vertex">
+					<input semantic="POSITION" source="#back_003-Position"/>
+				</vertices>
+				<triangles count="2">
+					<input offset="0" semantic="VERTEX" source="#back_003-Vertex"/>
+					<input offset="1" semantic="NORMAL" source="#back_003-Normals"/>
+					<p>1 0 0 1 2 2 2 3 3 4 1 5</p>
+				</triangles>
+			</mesh>
+		</geometry>
+	</library_geometries>
+	<library_visual_scenes>
+		<visual_scene id="Scene" name="Scene">
+			<node layer="L1" id="right" name="right">
+				<matrix>
+					1.0 0.0 0.0 0.0 
+					0.0 1.0 0.0 0.0 
+					0.0 0.0 1.0 0.0 
+					0.0 0.0 0.0 1.0 
+				</matrix>
+				<instance_geometry url="#right_002"/>
+				<extra>
+					<technique profile="Blender">
+						<param type="STRING" name="material">green.material.xml</param>
+					</technique>
+				</extra>
+			</node>
+			<node layer="L1" id="left" name="left">
+				<matrix>
+					1.0 0.0 0.0 0.0 
+					0.0 1.0 0.0 0.0 
+					0.0 0.0 1.0 0.0 
+					0.0 0.0 0.0 1.0 
+				</matrix>
+				<instance_geometry url="#left_002"/>
+				<extra>
+					<technique profile="Blender">
+						<param type="STRING" name="material">red.material.xml</param>
+					</technique>
+				</extra>
+			</node>
+			<node layer="L1" id="top" name="top">
+				<matrix>
+					1.0 0.0 0.0 0.0 
+					0.0 1.0 0.0 0.0 
+					0.0 0.0 1.0 0.0 
+					0.0 0.0 0.0 1.0 
+				</matrix>
+				<instance_geometry url="#top_002"/>
+				<extra>
+					<technique profile="Blender">
+						<param type="STRING" name="material">gray.material.xml</param>
+					</technique>
+				</extra>
+			</node>
+			<node layer="L1" id="bottom" name="bottom">
+				<matrix>
+					1.0 0.0 0.0 0.0 
+					0.0 1.0 0.0 0.0 
+					0.0 0.0 1.0 0.0 
+					0.0 0.0 0.0 1.0 
+				</matrix>
+				<instance_geometry url="#bottom_002"/>
+				<extra>
+					<technique profile="Blender">
+						<param type="STRING" name="material">gray.material.xml</param>
+					</technique>
+				</extra>
+			</node>
+			<node layer="L1" id="back" name="back">
+				<matrix>
+					1.0 0.0 0.0 0.0 
+					0.0 1.0 0.0 0.0 
+					0.0 0.0 1.0 0.0 
+					0.0 0.0 0.0 1.0 
+				</matrix>
+				<instance_geometry url="#back_003"/>
+				<extra>
+					<technique profile="Blender">
+						<param type="STRING" name="material">gray.material.xml</param>
+					</technique>
+				</extra>
+			</node>
+			<node layer="L1" id="Lamp" name="Lamp">
+				<matrix>
+					1.0 0.0 0.0 0.0 
+					0.0 1.0 0.0 0.0 
+					0.0 0.0 1.0 0.9 
+					0.0 0.0 0.0 1.0 
+				</matrix>
+				<instance_light url="#Spot"/>
+				<extra>
+					<technique profile="Blender">
+						<param type="STRING" name="light">light0.light.xml</param>
+					</technique>
+				</extra>
+			</node>
+			<node layer="L1" id="Camera" name="Camera">
+				<matrix>
+					1.0 0.0 0.0 0.0 
+					0.0 -0.0 -1.0 -3.508 
+					0.0 1.0 -0.0 0.0 
+					0.0 0.0 0.0 1.0 
+				</matrix>
+				<instance_camera url="#Camera-Camera"/>
+			</node>
+		</visual_scene>
+	</library_visual_scenes>
+	<scene>
+		<instance_visual_scene url="#Scene"/>
+	</scene>
+</COLLADA>

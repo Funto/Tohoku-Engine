@@ -1,0 +1,26 @@
+glVertex() : object / local coordinates
+           |
+           |
+           | model * vertex
+           V
+   world coordinates
+           |
+           |
+           | view * model * vertex
+           V
+    eye coordinates
+           |
+           | proj * view * model * vertex
+           | (i.e. post-vertex / geometry shader)
+           V
+    clip coordinates
+           | <------ THERE : clipping ! discard values not in range [-Wc ; Wc]
+           |
+           | (proj * view * model * vertex) => divide by w : called "perspective division"
+           V
+normalized device coordinates (in [-1.0, 1.0])
+           |
+           |
+           | viewport mapping/transformation (glDepthRange(), glViewport())
+           V
+  window coordinates

@@ -1,0 +1,9 @@
+<light>
+	<color r="1.5" g="1.5" b="1.5"/>
+	<angle value="90.0"/>
+	<!--bounce_map_size value="8"/-->
+	<!--bounce_map_size value="16"/-->
+	<!--bounce_map_size value="32"/-->
+	<bounce_map_size value="64"/>	<!-- THIS ONE for the final result -->
+	<!--bounce_map_size value="128"/-->
+</light>

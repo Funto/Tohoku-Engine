@@ -1,0 +1,17 @@
+window_sizes 1279 717 259 1014 574 64
+diagrams
+  active  classdiagram_ref 128042 // class diagram
+    1014 574 100 4 0 0
+end
+show_stereotypes
+selected 
+package_ref 129 // uml
+open
+  class_ref 128042 // Object
+  class_ref 128170 // Scene
+  class_ref 129706 // Light
+  class_ref 129834 // Camera
+  class_ref 129962 // MeshObject
+  class_ref 131754 // ElementContainer
+end
+end

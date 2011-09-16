@@ -1,0 +1,17 @@
+<material>
+	<profile name="raytrace">
+		<diffuse  r="0.0" g="0.6" b="0.0"/>
+		<emissive r="0.1" g="0.3" b="0.1"/>
+		<reflection value="0.5"/>
+	</profile>
+	<profile name="general">
+		<program vertex="general.vert" fragment="general.frag"/>
+		<vec4 name="material_diffuse"  r="0.0" g="1.0" b="0.0" a="1.0"/>
+		<vec4 name="material_specular" r="0.0" g="0.2" b="0.0" a="1.0"/>
+		<float name="material_specular_exp" value="32.0"/>
+		<float name="material_reflectance"  value="0.5"  />
+	</profile>
+	<profile name="depth_peeling">
+		<program vertex="depth_peeling.vert" fragment="depth_peeling.frag"/>
+	</profile>
+</material>

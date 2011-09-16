@@ -1,0 +1,81 @@
+% opengl_spaces.tex
+% To be compiled with latex, not with pdflatex.
+
+\documentclass{article}
+\usepackage{pstricks}
+\usepackage{pstricks-add}
+
+\begin{document}
+
+\title{OpenGL spaces and transformations}
+\author{Lionel Fuentes}
+\date{May 2010}
+\maketitle
+
+\section{Introduction}
+This document is aimed at being a reminder for dealing with the different
+3D spaces and transformations one has to work with when using the OpenGL
+graphics API. I primarily made this document for myself, but feel free
+to use it and distribute it as you want.
+
+\section{OpenGL spaces}
+
+%\begin{center}
+\begin{tabular}{p{2cm} c}
+	\begin{psmatrix}[rowsep=0.8,colsep=0.4]
+		%~ [name=local] & \dianode[fillstyle=solid,fillcolor=red!30]{local}{Local coordinates}\\
+					 %~ & \rnode{local_world}{\psframebox[fillstyle=solid,fillcolor=blue!30]{$model\times vertex$}}\\
+		%~ [name=world] & \dianode[fillstyle=solid,fillcolor=red!30]{world}{World coordinates}\\
+					 %~ & \rnode{world_eye}{\psframebox[fillstyle=solid,fillcolor=blue!30]{$view\times model\times vertex$}}\\
+		%~ [name=eye]   & \dianode[fillstyle=solid,fillcolor=red!30]{eye}{Eye coordinates} & (or Camera space, or Eye space)\\
+
+		\rnode{local}{\psframebox[fillstyle=solid,fillcolor=blue!30]{Local coordinates}}\\
+		\rnode{world}{\psframebox[fillstyle=solid,fillcolor=blue!30]{World coordinates}}\\
+		\rnode{eye}{\psframebox[fillstyle=solid,fillcolor=blue!30]{Eye coordinates (=camera space = eye space)}} & Light calculations\\
+	\end{psmatrix}
+
+	\psset{arrows=->,nodesep=0pt}
+	%~ \ncline{local}{local_world}
+	%~ \ncline{local_world}{world}
+	%~ \ncline{world}{world_eye}
+	%~ \ncline{world_eye}{eye}
+
+	\ncline{local}{world}\nbput{$model\times vertex$}
+	\ncline{world}{eye}\nbput{$view\times model\times vertex$}
+
+	%\psbrace[ref=r,rot=180,nodesepA=0pt](world)(eye){Test}
+
+	%\ncline{local}{local_world}\nbput{Yes}
+	%\psbrace[ref=r,rot=180,nodesepA=-8pt](X1)(X2){Stage 1}
+	%\psbrace[ref=r,rot=180,nodesepA=-8pt](X2)(Y2){\parbox{2cm}{Stage 2 very looooooong text}}
+\end{tabular}
+%\end{center}
+
+\end{document}
+
+%~ \documentclass{article}
+%~ \usepackage{pstricks}
+%~ \usepackage{pstricks-add}
+%~
+%~ \begin{document}
+%~
+%~ \begin{center}
+%~ \begin{tabular}{p{2cm} c}
+   %~ \begin{psmatrix}[rowsep=0.8,colsep=0.4]
+     %~ [name=X1] & \\[-25pt]
+               %~ & \dianode[fillstyle=solid,fillcolor=red!30]{S}{Condition1?}\\[0pt]
+               %~ & \rnode{SA}{\psframebox[fillstyle=solid,fillcolor=blue!30]{do something}}\\[-25pt]
+     %~ [name=X2] & \\[0pt]
+               %~ & \dianode[fillstyle=solid,fillcolor=red!30]{R}{Condition2?}\\[-10pt]
+     %~ [name=Y2] &
+   %~ \end{psmatrix}%
+       %~ \psset{arrows=->,nodesep=0pt}
+       %~ \ncline{S}{SA}\nbput{Yes}
+       %~ \ncline{SA}{R}
+     %~ \psbrace[ref=r,rot=180,nodesepA=-8pt](X1)(X2){Stage 1}
+     %~ \psbrace[ref=r,rot=180,nodesepA=-8pt](X2)(Y2){\parbox{2cm}{Stage 2 very
+       %~ looooooong text}}
+%~ \end{tabular}
+%~ \end{center}
+%~
+%~ \end{document}

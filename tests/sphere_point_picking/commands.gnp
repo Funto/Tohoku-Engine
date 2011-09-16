@@ -1,0 +1,2 @@
+splot 'data.dat'
+pause -1 "Press enter on the terminal to quit"

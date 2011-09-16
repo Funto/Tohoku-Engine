@@ -1,0 +1,7 @@
+<light>
+	<color r="1.5" g="1.5" b="1.5"/>
+	<angle value="70.0"/>
+	<shadow_map_size value="1024"/>
+	<bounce_map_size value="32"/>
+	<!--bounce_map_size value="128"/-->
+</light>

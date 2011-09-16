@@ -1,0 +1,48 @@
+Thread GLM: http://www.opengl.org/discussion_boards/ubbthreads.php?ubb=showflat&Number=270950&Searchpage=2&Main=52393&Words=GLM&Search=true#Post270950
+
+Matrices
+========
+
+Dans Matrix4.h :
+---------------
+T values[16];	// NB : les valeurs sont enregistrées "façon OpenGL", i.e. "column-major order" :
+				// de l'élément 0 au 3 : c'est la 1ère colonne, etc...
+
+Ordre dans la matrice :
+-----------------------
+0  4  8  12
+1  5  9  13
+2  6  10 14
+3  7  11 15
+
+-----------------------
+my_matrix[i] -> ith column
+
+Tableaux 2D :
+-------------
+
+m_2d[colonne][ligne] == m[colonne*4 + ligne] = m[j*4 + i]
+
+1ère colonne :
+	m_2d[0][0] == m[0]
+	m_2d[0][1] == m[1]
+	m_2d[0][2] == m[2]
+	m_2d[0][3] == m[3]
+
+2ème colonne :
+	m_2d[1][0] == m[4]
+	m_2d[1][1] == m[5]
+	m_2d[1][2] == m[6]
+	m_2d[1][3] == m[7]
+
+3ème colonne :
+	m_2d[2][0] == m[8]
+	m_2d[2][1] == m[9]
+	m_2d[2][2] == m[10]
+	m_2d[2][3] == m[11]
+
+4ème colonne :
+	m_2d[3][0] == m[12]
+	m_2d[3][1] == m[13]
+	m_2d[3][2] == m[14]
+	m_2d[3][3] == m[15]

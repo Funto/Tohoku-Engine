@@ -1,0 +1,1 @@
+Program('sphere_point_picking.cpp')

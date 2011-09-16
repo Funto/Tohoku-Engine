@@ -1,0 +1,24 @@
+object space	vertex
+	|
+	|
+	|
+world space		model*vertex
+	|
+	|
+	|
+eye space		view*model*vertex
+	|
+	|
+	|
+clip space		proj*view*model*vertex
+[-w, w] x [-w, w] x [-w, w]
+	|
+	|
+	|
+normalized device coords	divw(proj*view*model*vertex)
+[-1,1] x [-1,1] x [-1,1]
+	|
+	|
+	|
+window coords		viewport_map(divw(proj*view*model*vertex))
+[0,w] x [0,h] x [0,1]

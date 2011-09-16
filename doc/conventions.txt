@@ -1,0 +1,6 @@
+VBO/VAO binding:
+---------------
+We never unbind VBO/VAO as we are not supposed to use the default binding
+according to the OpenGL specification anyway.
+This way, we should not call glDisableVertexAttribArray() either, as this is
+useless in our case.

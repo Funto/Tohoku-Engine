@@ -1,0 +1,26 @@
+<material>
+	<profile name="raytrace">
+		<diffuse  r="0.35" g="0.16" b="0.0"/>
+		<emissive r="0.2"  g="0.1"  b="0.0"/>
+		<reflection value="0.5"/>
+	</profile>
+	<profile name="general">
+		<program vertex="general.vert" fragment="general.frag">
+			<symbol name="TEXTURE_MAPPING"/>
+			<symbol name="NORMAL_MAPPING"/>
+		</program>
+		<texture name="metal.tga"           unit="0"/>
+		<texture name="metal_normalmap.tga" unit="1"/>
+		<sampler2D name="diffuse_tex" value="0"/>
+		<sampler2D name="normal_tex"  value="1"/>
+		<float name="material_specular_exp" value="128.0"/>
+		<float name="material_reflectance"  value="0.5"  />
+	</profile>
+	<profile name="depth_peeling">
+		<program vertex="depth_peeling.vert" fragment="depth_peeling.frag">
+			<symbol name="NORMAL_MAPPING"/>
+		</program>
+		<texture name="metal_normalmap.tga" unit="1"/>
+		<sampler2D name="normal_tex" value="1"/>
+	</profile>
+</material>

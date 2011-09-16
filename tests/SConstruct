@@ -1,0 +1,4 @@
+Import('env')
+Import('src_obj')
+
+env.Program('preproc', [src_obj, 'preproc.cpp'])
