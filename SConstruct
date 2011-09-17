@@ -151,6 +151,7 @@ if use_mingw:
 else:
 	env.Append(LIBS=['pthread'])
 
+env.Append(CPPDEFINES=['TIXML_USE_STL'])
 #env.Append(CCFLAGS=['-g', '-O2', '-Wall'])
 env.Append(CCFLAGS=['-s', '-O2', '-Wall'])
 
