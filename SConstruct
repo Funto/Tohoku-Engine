@@ -51,6 +51,7 @@ src/renderer/DeferredShadingRenderer.cpp
 src/renderer/DepthPeelingRenderer.cpp
 src/renderer/MultiLayerRenderer.cpp
 src/renderer/MyRenderer.cpp
+src/renderer/MyRenderer2.cpp
 src/renderer/RasterRenderer.cpp
 src/renderer/RaytraceRenderer.cpp
 src/renderer/StencilRoutedRenderer.cpp
@@ -62,6 +63,7 @@ src/renderer/utils/TextureBinding.cpp
 src/renderer/utils/TexunitManager.cpp
 src/renderer/utils/GLRaytracer.cpp
 src/renderer/utils/TextureReducer.cpp
+src/renderer/utils/PhotonsAdvancer.cpp
 src/renderer/utils/PhotonVolumesRenderer.cpp
 src/scene/Camera.cpp
 src/scene/DAELoader.cpp
@@ -152,7 +154,7 @@ else:
 	env.Append(LIBS=['pthread'])
 
 env.Append(CPPDEFINES=['TIXML_USE_STL'])
-#env.Append(CCFLAGS=['-g', '-O2', '-Wall'])
+env.Append(CCFLAGS=['-g', '-O2', '-Wall'])
 env.Append(CCFLAGS=['-s', '-O2', '-Wall'])
 
 # ----------------------------------------------------------------------

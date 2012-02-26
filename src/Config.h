@@ -16,7 +16,8 @@
 // 4: Stencil-routed A-Buffer
 // 5: Multi layer renderer (deferred shading + depth peeling)
 // 6: My own technique
-// 7: CPU Raytracer
+// 7: My own technique, second version
+// 8: CPU Raytracer
 #define DEFAULT_RENDERER 6
 
 // 0: Cornell Suzanne

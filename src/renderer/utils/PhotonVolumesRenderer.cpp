@@ -156,7 +156,11 @@ void PhotonVolumesRenderer::createVBOAndVAO()
 	// of volume 1:
 	const GLfloat wanted_length = pow(12.0 / (5.0*(3.0 + sqrt(5.0))), 1.0/3.0);	// length of an icosahedron
 																				// of volume 1
+	// BEGIN BOUM
 	const GLfloat scale_factor = wanted_length / 2.0;
+//	const GLfloat scale_factor = 0.2 * wanted_length / 2.0;
+	// END BOUM
+	
 	for(uint i=0 ; i < NB_VERTICES*3 ; i++)
 		vertices[i]*= scale_factor;
 

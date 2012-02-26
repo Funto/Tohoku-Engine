@@ -1,13 +1,14 @@
-// MyRenderer.cpp
+// MyRenderer2.cpp
 
-#include "MyRenderer.h"
+#include "MyRenderer2.h"
 
 #include "../CommonIndices.h"
 #include "RasterRenderer.h"
-#include "MultiLayerRenderer.h"
+#include "DeferredShadingRenderer.h"
 #include "utils/BounceMap.h"
 #include "utils/GBuffer.h"
 #include "utils/GLRaytracer.h"
+#include "utils/PhotonsAdvancer.h"
 #include "utils/PhotonVolumesRenderer.h"
 #include "../scene/Camera.h"
 #include "../scene/Scene.h"
@@ -16,29 +17,26 @@
 #include "../log/Log.h"
 using namespace std;
 
-//#define DEBUG_DONT_DRAW_PHOTON_VOLUMES
+#define DEBUG_DONT_DRAW_PHOTON_VOLUMES
 #define NB_ITERATIONS_INDIRECT 1
 
 // ---------------------------------------------------------------------
-MyRenderer::MyRenderer(uint width, uint height,
+MyRenderer2::MyRenderer2(uint width, uint height,
 					   const vec3& back_color,
 					   bool use_shadow_mapping,
 					   bool use_visibility_maps,
 					   const string& brdf_function,
-					   const string& kernel_filename,
-					   uint nb_back_layers)
+					   const string& kernel_filename)
 : Renderer(width, height, back_color),
   raster_renderer_no_shadows(NULL),
-  multi_layer_renderer(NULL),
-  gl_raytracer(NULL),
-  photon_volumes_renderer(NULL),
+  direct_renderer(NULL),
+  photons_advancer(NULL),
+  //photon_volumes_renderer(NULL),	// TODO
   use_shadow_mapping(use_shadow_mapping),
   use_visibility_maps(use_visibility_maps),
-  brdf_function(brdf_function),
-  nb_back_layers(nb_back_layers),
-  debug_original_size(false)
+  brdf_function(brdf_function)
 {
-	// Create and the raster renderer we use for the lights' GBuffers:
+	// Create the raster renderer we use for the lights' GBuffers:
 	raster_renderer_no_shadows = new RasterRenderer(
 			512, 512,	// width, height: unused
 			vec3(0.0),	// back color
@@ -48,35 +46,38 @@ MyRenderer::MyRenderer(uint width, uint height,
 			VAO_INDEX_RASTER,
 			0);	// no VAO index for shadows
 
-	// Create the multi-layer renderer:
-	multi_layer_renderer = new MultiLayerRenderer(
+	// Create the direct lighting renderer:
+	direct_renderer = new DeferredShadingRenderer(
 			width, height,
 			back_color,
 			use_shadow_mapping,
-			brdf_function,
-			nb_back_layers);
+			use_visibility_maps,
+			brdf_function);
 
-	// Raytracer:
-	gl_raytracer = new GLRaytracer(width,
-								   height,
-								   nb_back_layers+1);
+	// Photons advancer
+	photons_advancer = new PhotonsAdvancer(width, height, 1);
 
 	// Photon volumes renderer:
-	photon_volumes_renderer = new PhotonVolumesRenderer(width,
+	// TODO
+/*	photon_volumes_renderer = new PhotonVolumesRenderer(width,
 														height,
 														gl_raytracer->getTargetWidth(),
 														gl_raytracer->getTargetHeight(),
 														kernel_filename,
 														brdf_function);
+*/
 }
 
-MyRenderer::~MyRenderer()
+MyRenderer2::~MyRenderer2()
 {
-	// Photon volumes renderer:
-	delete photon_volumes_renderer;
+	// Photon volume renderer:
+	//delete photon_volumes_renderer;	// TODO
+	
+	// Photons advancer:
+	delete photons_advancer;
 
-	// Multi-layer renderer:
-	delete multi_layer_renderer;
+	// Direct lighting renderer:
+	delete direct_renderer;
 
 	// Raster renderer used for the light GBuffers:
 	delete raster_renderer_no_shadows;
@@ -84,32 +85,33 @@ MyRenderer::~MyRenderer()
 
 // ---------------------------------------------------------------------
 // Called when we switch to this renderer
-void MyRenderer::setup()
+void MyRenderer2::setup()
 {
 	// Setup the raster renderer we use for the lights' GBuffers:
 	raster_renderer_no_shadows->setup();
+	
+	// Setup the direct lighting renderer
+	direct_renderer->setup();
 
-	// Setup the multi-layer renderer:
-	multi_layer_renderer->setup();
-
-	// Setup the GPU raytracer:
-	gl_raytracer->setup();
+	// Setup the photons advancer:
+	photons_advancer->setup();
+	//gl_raytracer->setup();
 
 	// Setup the photon volumes renderer:
-	photon_volumes_renderer->setup();
+	//photon_volumes_renderer->setup();	// TODO
 }
 
 // Called when we switch to another renderer or close the program
-void MyRenderer::cleanup()
+void MyRenderer2::cleanup()
 {
 	// Photon volume renderer:
-	photon_volumes_renderer->cleanup();
+	//photon_volumes_renderer->cleanup();	// TODO
 
-	// GPU raytracer:
-	gl_raytracer->cleanup();
+	// Photons advancer:
+	photons_advancer->cleanup();
 
-	// Multi-layer renderer:
-	multi_layer_renderer->cleanup();
+	// Direct lighting renderer:
+	direct_renderer->cleanup();
 
 	// Raster renderer used for the light GBuffers:
 	raster_renderer_no_shadows->cleanup();
@@ -118,15 +120,15 @@ void MyRenderer::cleanup()
 // ---------------------------------------------------------------------
 // Called when we change the scene
 // Setup the scene: sort objects by programs and load shaders
-void MyRenderer::loadSceneArray(Scene* scene)
+void MyRenderer2::loadSceneArray(Scene* scene)
 {
 	// Get some pointers/values:
 	ArrayElementContainer* elements = (ArrayElementContainer*)(scene->getElements());
 	Light** lights = elements->getLights();
 	uint nb_lights = elements->getNbLights();
 
-	// Load the scene for the multi-layer renderer:
-	multi_layer_renderer->loadSceneArray(scene);
+	// Load the scene for the direct lighting renderer:
+	direct_renderer->loadSceneArray(scene);
 
 	// Add one GBuffer and one BounceMap to each light:
 	// For each light, add a GBuffer and a BounceMap to it:
@@ -145,7 +147,7 @@ void MyRenderer::loadSceneArray(Scene* scene)
 
 // ---------------------------------------------------------------------
 // Unload the materials of the previous scene
-void MyRenderer::unloadSceneArray(Scene* scene)
+void MyRenderer2::unloadSceneArray(Scene* scene)
 {
 	// Get some pointers/values:
 	ArrayElementContainer* elements = (ArrayElementContainer*)(scene->getElements());
@@ -160,13 +162,13 @@ void MyRenderer::unloadSceneArray(Scene* scene)
 		l->setUserData(LIGHT_DATA_BOUNCE_MAP, NULL);
 	}
 
-	// Unload the scene for the multi-layer renderer:
-	multi_layer_renderer->unloadSceneArray(scene);
+	// Unload the scene for the direct lighting renderer:
+	direct_renderer->unloadSceneArray(scene);
 }
 
 // ---------------------------------------------------------------------
 // Render one frame
-void MyRenderer::renderArray(Scene* scene)
+void MyRenderer2::renderArray(Scene* scene)
 {
 	GL_CHECK();
 
@@ -175,23 +177,13 @@ void MyRenderer::renderArray(Scene* scene)
 	ArrayElementContainer* elements = (ArrayElementContainer*)(scene->getElements());
 	Light** lights = elements->getLights();
 	uint nb_lights = elements->getNbLights();
-	GBuffer** back_gbuffers = multi_layer_renderer->getBackGBuffers();
-	uint nb_back_gbuffers = multi_layer_renderer->getNbBackGBuffers();
-
+	
 	// BEGIN DEBUG
 	//lights[0]->setPosition(vec3(-0.26, 0.0, 0.62));
 	// END DEBUG
 
-	// Create an array of pointers to the GBuffers representing the scene:
-	GBuffer* gbuffers[NB_MAX_DEPTH_LAYERS];
-	gbuffers[0] = multi_layer_renderer->getFrontGBuffer();
-	for(uint i=0 ; i < nb_back_gbuffers ; i++)
-		gbuffers[i+1] = back_gbuffers[i];
-
-	GL_CHECK();
-
-	// Do a depth peeling and a deferred shading rendering:
-	multi_layer_renderer->renderArray(scene);
+	// Direct lighting
+	direct_renderer->renderArray(scene);
 
 	// Compute the eye's projection and view matrix:
 	mat4 eye_view = camera->computeViewMatrix();
@@ -220,22 +212,30 @@ void MyRenderer::renderArray(Scene* scene)
 
 			GL_CHECK();
 
-			gl_raytracer->run(l, gbuffers, eye_proj, eye_view, camera->getZNear(), camera->getZFar());
+			// TODO
+			GBuffer* gbuffer = direct_renderer->getGBuffer();
+			photons_advancer->run(l, &gbuffer, eye_proj, eye_view, camera->getZNear(), camera->getZFar());
+			
+//			GBuffer* gbuffer = direct_renderer->getGBuffer();
+//			gl_raytracer->run(l, &gbuffer, eye_proj, eye_view, camera->getZNear(), camera->getZFar());
 
+			// TODO
+/*
 #ifndef DEBUG_DONT_DRAW_PHOTON_VOLUMES
 			photon_volumes_renderer->run(eye_view,
 										 eye_proj,
 										 gl_raytracer,
-										 multi_layer_renderer->getFrontGBuffer(),
+										 direct_renderer->getGBuffer(),
 										 bounce_map->getSize());
 #endif
+*/
 		}
 	}
 }
 
 // ---------------------------------------------------------------------
 // 2D debug drawing:
-void MyRenderer::debugDraw2D(Scene* scene)
+void MyRenderer2::debugDraw2D(Scene* scene)
 {
 	uint x = 0;
 	uint y = 0;
@@ -253,21 +253,6 @@ void MyRenderer::debugDraw2D(Scene* scene)
 	ArrayElementContainer* elements = (ArrayElementContainer*)(scene->getElements());
 	Light** lights = elements->getLights();
 	uint nb_lights = elements->getNbLights();
-
-	// Intersection map:
-	{
-		uint w = gl_raytracer->getTargetWidth();
-		uint h = gl_raytracer->getTargetHeight();
-
-		GLuint id_debug = gl_raytracer->getDebugTex();
-		if(id_debug != 0)
-		{
-			glutil::displayTextureRect(id_debug, x, y, w, h, debug_original_size); NEXT_POS();
-		}
-		glutil::displayTextureRect(gl_raytracer->getPositionTex(),  x, y, w, h, debug_original_size); NEXT_POS();
-		glutil::displayTextureRect(gl_raytracer->getPowerTex(),     x, y, w, h, debug_original_size); NEXT_POS();
-		glutil::displayTextureRect(gl_raytracer->getComingDirTex(), x, y, w, h, debug_original_size); NEXT_POS();
-	}
 
 	// Lights GBuffers:
 	for(uint i=0 ; i < nb_lights ; i++)
@@ -297,7 +282,7 @@ void MyRenderer::debugDraw2D(Scene* scene)
 
 // ---------------------------------------------------------------------
 // 3D debug drawing:
-void MyRenderer::debugDraw3D(Scene* scene)
+void MyRenderer2::debugDraw3D(Scene* scene)
 {
 	if(scene->getElements()->getType() != ElementContainer::ARRAY)
 		return;
@@ -311,7 +296,7 @@ void MyRenderer::debugDraw3D(Scene* scene)
 
 	// Draw the frustums of the lights:
 	{
-		glutil::Enable<GL_DEPTH_TEST> depth_test_state;
+		glutil::Disable<GL_DEPTH_TEST> depth_test_state;
 		for(uint i=0 ; i < nb_lights ; i++)
 		{
 			Light* l = lights[i];
@@ -321,11 +306,8 @@ void MyRenderer::debugDraw3D(Scene* scene)
 }
 
 // Implementation of KeyEventReceiver:
-void MyRenderer::onKeyEvent(int key, int action)
+void MyRenderer2::onKeyEvent(int key, int action)
 {
 	if(action != GLFW_RELEASE)
 		return;
-
-	if(key == 'F')
-		debug_original_size = !debug_original_size;
 }

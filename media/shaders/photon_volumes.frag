@@ -69,12 +69,17 @@ void main()
 		discard;
 
 	// BRDF evaluation:
+	// BEGIN BOUM
 	vec4 brdf_eval = _BRDF_FUNCTION_(	w_i,
 										-eye_space_pos,
 										eye_space_normal,
 										texel_diffuse,
 										texel_specular
 									);
+
+//	vec4 brdf_eval = 0.3*vec4(texel_diffuse.rgb, 0);
+	// END BOUM
+	
 
 	// Fetch the kernel value:
 	float relative_dist = dist_photon_to_point * var_inv_major_radius;

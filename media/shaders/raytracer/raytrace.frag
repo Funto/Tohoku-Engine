@@ -82,7 +82,8 @@ void main()
 	if(abs(window_coords.z - depth_val_0) < z_error)
 	{
 		#ifdef _DEBUG_USE_DEBUG_FBO_ATTACHMENT_
-			frag_debug = vec4(var_debug_color, 0.0);
+			//frag_debug = vec4(var_debug_color, 0.0);
+			frag_debug = vec4(1.0, 0.0, 0.0, 1.0);
 		#endif
 		frag_position   = vec4(eye_pos,        0.0);
 		frag_power      = vec4(var_power_i,    0.0);
@@ -92,7 +93,8 @@ void main()
 	{
 		#ifdef _DEBUG_USE_DEBUG_FBO_ATTACHMENT_
 			//~ frag_debug = 0.1 * vec4(var_debug_color, 0.0);
-			frag_debug = vec4(0.0);
+			//frag_debug = vec4(0.0);
+			frag_debug = vec4(0.0, 1.0, 0.0, 1.0);
 			//~ frag_debug = vec4(var_debug_color, 0.0);
 		#endif
 		frag_position   = vec4(0.0);

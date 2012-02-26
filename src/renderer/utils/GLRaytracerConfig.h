@@ -12,6 +12,7 @@
 
 // Debug flags:
 
+// BEGIN BOUM
 //#define DEBUG_NB_LINES 1000
 //#define DEBUG_RENDER_TO_SCREEN
 //#define DEBUG_USE_EYE_SPACE_LINES
@@ -19,6 +20,7 @@
 //#define DEBUG_USE_DEBUG_FBO_ATTACHMENT	// if defined, var_debug is outputed by the fragment shader
 										// to either the screen or id_debug_target
 										// (depending on whether DEBUG_RENDER_TO_SCREEN is defined or not)
+// END BOUM
 
 // Fragment shader output locations (for writing to the FBO owned by GLRaytracer):
 #ifdef DEBUG_USE_DEBUG_FBO_ATTACHMENT

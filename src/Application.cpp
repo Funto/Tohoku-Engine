@@ -14,6 +14,7 @@
 #include "renderer/DepthPeelingRenderer.h"
 #include "renderer/MultiLayerRenderer.h"
 #include "renderer/MyRenderer.h"
+#include "renderer/MyRenderer2.h"
 #include "renderer/RasterRenderer.h"
 #include "renderer/RaytraceRenderer.h"
 #include "renderer/StencilRoutedRenderer.h"
@@ -274,6 +275,15 @@ void Application::createRenderers()
 									   BRDF_FUNCTION,
 									   KERNEL_FILENAME,
 									   NB_DEPTH_LAYERS));
+	
+	// 6: My own technique renderer:
+	renderers.push_back(new MyRenderer2(WIN_WIDTH,
+									   WIN_HEIGHT,
+									   BACK_COLOR,
+									   USE_SHADOW_MAPPING,
+									   USE_VISIBILITY_MAPS,
+									   BRDF_FUNCTION,
+									   KERNEL_FILENAME));
 
 #ifdef CREATE_CPU_RAYTRACER
 	// 7: Simple CPU raytracer:
