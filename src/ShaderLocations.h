@@ -45,4 +45,11 @@
 #define BOUNCE_MAP_FRAG_DATA_OUTPUT0 0
 #define BOUNCE_MAP_FRAG_DATA_OUTPUT1 1
 
+// ---------------------------------------------------------------------
+// PHOTONS MAPS:
+#define PHOTONS_MAP_ATTRIB_POSITION 0
+
+#define PHOTONS_MAP_FRAG_DATA_OUTPUT0 0
+#define PHOTONS_MAP_FRAG_DATA_OUTPUT1 1
+
 #endif // SHADER_LOCATIONS_H

@@ -59,6 +59,7 @@ src/renderer/utils/GBuffer.cpp
 src/renderer/utils/GBufferRenderer.cpp
 src/renderer/utils/ShadowMap.cpp
 src/renderer/utils/BounceMap.cpp
+src/renderer/utils/PhotonsMap.cpp
 src/renderer/utils/TextureBinding.cpp
 src/renderer/utils/TexunitManager.cpp
 src/renderer/utils/GLRaytracer.cpp

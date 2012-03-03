@@ -4,6 +4,8 @@ media/lights/light1.light.xml
 media/shaders/bounce_map.frag
 media/shaders/bounce_map.vert
 media/shaders/constants.shader
+media/shaders/ray_marching.frag
+media/shaders/ray_marching.vert
 media/shaders/debug_general/debug_general.sh
 media/shaders/debug_general/general_deferred.frag
 media/shaders/debug_general/general_deferred.vert
@@ -232,5 +234,7 @@ src/renderer/utils/TextureReducer.h
 src/renderer/utils/TexunitManager.cpp
 src/renderer/utils/TexunitManager.h
 src/glutil/glxw.h
-src/renderer/utils/PhotonAdvancer.h
-src/renderer/utils/PhotonAdvancer.cpp
+src/renderer/utils/PhotonsAdvancer.h
+src/renderer/utils/PhotonsAdvancer.cpp
+src/renderer/utils/PhotonsMap.h
+src/renderer/utils/PhotonsMap.cpp

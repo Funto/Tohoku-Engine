@@ -6,9 +6,10 @@
 #include "RasterRenderer.h"
 #include "DeferredShadingRenderer.h"
 #include "utils/BounceMap.h"
+#include "utils/PhotonsMap.h"
 #include "utils/GBuffer.h"
 #include "utils/GLRaytracer.h"
-#include "utils/PhotonsAdvancer.h"
+//#include "utils/PhotonsAdvancer.h"
 #include "utils/PhotonVolumesRenderer.h"
 #include "../scene/Camera.h"
 #include "../scene/Scene.h"
@@ -30,7 +31,7 @@ MyRenderer2::MyRenderer2(uint width, uint height,
 : Renderer(width, height, back_color),
   raster_renderer_no_shadows(NULL),
   direct_renderer(NULL),
-  photons_advancer(NULL),
+  //photons_advancer(NULL),
   //photon_volumes_renderer(NULL),	// TODO
   use_shadow_mapping(use_shadow_mapping),
   use_visibility_maps(use_visibility_maps),
@@ -55,7 +56,7 @@ MyRenderer2::MyRenderer2(uint width, uint height,
 			brdf_function);
 
 	// Photons advancer
-	photons_advancer = new PhotonsAdvancer(width, height, 1);
+	//photons_advancer = new PhotonsAdvancer(width, height, 1);
 
 	// Photon volumes renderer:
 	// TODO
@@ -74,7 +75,7 @@ MyRenderer2::~MyRenderer2()
 	//delete photon_volumes_renderer;	// TODO
 	
 	// Photons advancer:
-	delete photons_advancer;
+	//delete photons_advancer;
 
 	// Direct lighting renderer:
 	delete direct_renderer;
@@ -94,7 +95,7 @@ void MyRenderer2::setup()
 	direct_renderer->setup();
 
 	// Setup the photons advancer:
-	photons_advancer->setup();
+	//photons_advancer->setup();
 	//gl_raytracer->setup();
 
 	// Setup the photon volumes renderer:
@@ -108,7 +109,7 @@ void MyRenderer2::cleanup()
 	//photon_volumes_renderer->cleanup();	// TODO
 
 	// Photons advancer:
-	photons_advancer->cleanup();
+	//photons_advancer->cleanup();
 
 	// Direct lighting renderer:
 	direct_renderer->cleanup();
@@ -130,8 +131,7 @@ void MyRenderer2::loadSceneArray(Scene* scene)
 	// Load the scene for the direct lighting renderer:
 	direct_renderer->loadSceneArray(scene);
 
-	// Add one GBuffer and one BounceMap to each light:
-	// For each light, add a GBuffer and a BounceMap to it:
+	// Add a GBuffer, a BounceMap and a PhotonsMap to each light:
 	for(uint i=0 ; i < nb_lights ; i++)
 	{
 		Light* l = lights[i];
@@ -142,6 +142,9 @@ void MyRenderer2::loadSceneArray(Scene* scene)
 
 		BounceMap* bounce_map = new BounceMap(size);
 		l->setUserData(LIGHT_DATA_BOUNCE_MAP, bounce_map);
+		
+		PhotonsMap* photons_map = new PhotonsMap(size);
+		l->setUserData(LIGHT_DATA_PHOTONS_MAP, photons_map);
 	}
 }
 
@@ -154,12 +157,13 @@ void MyRenderer2::unloadSceneArray(Scene* scene)
 	Light** lights = elements->getLights();
 	uint nb_lights = elements->getNbLights();
 
-	// Remove the GBuffers and the bounce maps of the lights:
+	// Remove the user data from the lights
 	for(uint i=0 ; i < nb_lights ; i++)
 	{
 		Light* l = lights[i];
 		l->setUserData(LIGHT_DATA_GBUFFER, NULL);
 		l->setUserData(LIGHT_DATA_BOUNCE_MAP, NULL);
+		l->setUserData(LIGHT_DATA_PHOTONS_MAP, NULL);
 	}
 
 	// Unload the scene for the direct lighting renderer:
@@ -190,46 +194,46 @@ void MyRenderer2::renderArray(Scene* scene)
 	mat4 eye_proj = camera->computeProjectionMatrix();
 
 	GL_CHECK();
-
+	
 	// For each light:
 	// - render to its GBuffer
 	// - compute its bounce map
-	// - raytrace the photons starting with the bounce map
+	// - advance the photons
 	// - render the photon volumes (indirect illumination):
 	for(uint i=0 ; i < nb_lights ; i++)
 	{
 		Light* l = lights[i];
 		GBuffer* light_gbuffer = (GBuffer*)(l->getUserData(LIGHT_DATA_GBUFFER));
 		BounceMap* bounce_map = (BounceMap*)(l->getUserData(LIGHT_DATA_BOUNCE_MAP));
+		PhotonsMap* photons_map = (PhotonsMap*)(l->getUserData(LIGHT_DATA_PHOTONS_MAP));
 
 		light_gbuffer->renderFromLight(l, scene, raster_renderer_no_shadows);
 
 		GL_CHECK();
+		
+		bounce_map->renderFromGBuffer(light_gbuffer);
+		GL_CHECK();
 
-		for(uint j=0 ; j < NB_ITERATIONS_INDIRECT ; j++)
-		{
-			bounce_map->renderFromGBuffer(light_gbuffer, j);
+		photons_map->compute(bounce_map, direct_renderer->getGBuffer(), NB_ITERATIONS_INDIRECT);
+		GL_CHECK();
 
-			GL_CHECK();
-
-			// TODO
-			GBuffer* gbuffer = direct_renderer->getGBuffer();
-			photons_advancer->run(l, &gbuffer, eye_proj, eye_view, camera->getZNear(), camera->getZFar());
-			
+		// TODO
+		//GBuffer* gbuffer = direct_renderer->getGBuffer();
+		//photons_advancer->run(l, &gbuffer, eye_proj, eye_view, camera->getZNear(), camera->getZFar());
+		
 //			GBuffer* gbuffer = direct_renderer->getGBuffer();
 //			gl_raytracer->run(l, &gbuffer, eye_proj, eye_view, camera->getZNear(), camera->getZFar());
 
-			// TODO
+		// TODO
 /*
 #ifndef DEBUG_DONT_DRAW_PHOTON_VOLUMES
-			photon_volumes_renderer->run(eye_view,
-										 eye_proj,
-										 gl_raytracer,
-										 direct_renderer->getGBuffer(),
-										 bounce_map->getSize());
+		photon_volumes_renderer->run(eye_view,
+									 eye_proj,
+									 gl_raytracer,
+									 direct_renderer->getGBuffer(),
+									 bounce_map->getSize());
 #endif
 */
-		}
 	}
 }
 

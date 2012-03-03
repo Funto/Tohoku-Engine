@@ -12,7 +12,7 @@ class Camera;
 class ArrayElementContainer;
 class RasterRenderer;
 class DeferredShadingRenderer;
-class PhotonsAdvancer;
+//class PhotonsAdvancer;
 class PhotonVolumesRenderer;
 
 class MyRenderer2 : public Renderer
@@ -20,7 +20,7 @@ class MyRenderer2 : public Renderer
 private:
 	RasterRenderer*				raster_renderer_no_shadows;	// used for rendering the light GBuffers
 	DeferredShadingRenderer*	direct_renderer;	// direct lighting
-	PhotonsAdvancer*			photons_advancer;
+	//PhotonsAdvancer*			photons_advancer;
 	//PhotonVolumesRenderer*		photon_volumes_renderer;	// TODO
 
 	bool		use_shadow_mapping;	// NB: current design only allows to set the usage of shadow mapping

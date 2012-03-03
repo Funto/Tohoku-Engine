@@ -18,7 +18,7 @@
 // 6: My own technique
 // 7: My own technique, second version
 // 8: CPU Raytracer
-#define DEFAULT_RENDERER 6
+#define DEFAULT_RENDERER 7
 
 // 0: Cornell Suzanne
 // 1: Cube

@@ -17,6 +17,7 @@ public:
 		SHADOW_MAP,
 		GBUFFER,
 		BOUNCE_MAP,
+		PHOTONS_MAP,
 	};
 
 public:

@@ -33,9 +33,10 @@ inline void __ValidateCustomProfileIndices__()
 
 // Light custom data indices:
 
-#define LIGHT_DATA_SHADOW_MAP 0
-#define LIGHT_DATA_GBUFFER    1
-#define LIGHT_DATA_BOUNCE_MAP 2
+#define LIGHT_DATA_SHADOW_MAP  0
+#define LIGHT_DATA_GBUFFER     1
+#define LIGHT_DATA_BOUNCE_MAP  2
+#define LIGHT_DATA_PHOTONS_MAP 3
 
 inline void _ValidateLightDataIndices__()
 {
