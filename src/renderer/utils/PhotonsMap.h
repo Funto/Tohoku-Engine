@@ -23,8 +23,13 @@ private:
 
 	GLuint id_fbo;	// FBO
 
-	GLuint id_output0;		// RGBA16F: see PHOTONS_MAP.frag
-	GLuint id_output1;		// RGBA16F: see PHOTONS_MAP.frag
+	GLuint id_output0;		// RGBA16F: see ray_marching.frag
+	GLuint id_output1;		// RGBA16F: see ray_marching.frag
+	
+	// Debug
+	GLuint id_debug_vao;
+	GLuint id_debug_vbo;
+	GPUProgramRef debug_program;
 
 public:
 	PhotonsMap(uint size);
@@ -32,7 +37,14 @@ public:
 
 	virtual Type getType() const {return PHOTONS_MAP;}
 
-	void compute(const BounceMap* bounce_map, const GBuffer* gbuffer, uint nb_iterations=1);
+	void run(const BounceMap* bounce_map,
+	         const GBuffer* light_gbuffer,
+	         const GBuffer* screen_gbuffer,
+	         const mat4& eye_proj,
+             const mat4& eye_view,
+	         uint nb_iterations=1);
+	
+	void debugDraw3D(const mat4& eye_proj_matrix);
 
 	// Getters:
 	inline uint getSize() const  {return size;}
@@ -46,6 +58,9 @@ private:
 	void createFBO();
 	void createProgram();
 	void createVBOAndVAO();
+	
+	void createDebugProgram();
+	void createDebugVBOAndVAO();
 };
 
 #endif // PHOTONS_MAP_H

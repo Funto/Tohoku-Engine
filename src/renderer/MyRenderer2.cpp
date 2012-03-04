@@ -214,7 +214,12 @@ void MyRenderer2::renderArray(Scene* scene)
 		bounce_map->renderFromGBuffer(light_gbuffer);
 		GL_CHECK();
 
-		photons_map->compute(bounce_map, direct_renderer->getGBuffer(), NB_ITERATIONS_INDIRECT);
+		photons_map->run(bounce_map,
+		                 light_gbuffer,
+		                 direct_renderer->getGBuffer(),
+		                 eye_proj,
+		                 eye_view,
+		                 NB_ITERATIONS_INDIRECT);
 		GL_CHECK();
 
 		// TODO
@@ -280,6 +285,16 @@ void MyRenderer2::debugDraw2D(Scene* scene)
 		glutil::displayTextureRect(bounce_map->getTexOutput0(), x, y, size, size); NEXT_POS();
 		glutil::displayTextureRect(bounce_map->getTexOutput1(), x, y, size, size); NEXT_POS();
 	}
+	
+	// Photons maps:
+	for(uint i=0 ; i < nb_lights ; i++)
+	{
+		PhotonsMap* photons_map = (PhotonsMap*)(lights[i]->getUserData(LIGHT_DATA_PHOTONS_MAP));
+		uint size = photons_map->getSize();
+
+		glutil::displayTextureRect(photons_map->getTexOutput0(), x, y, size, size); NEXT_POS();
+		glutil::displayTextureRect(photons_map->getTexOutput1(), x, y, size, size); NEXT_POS();
+	}
 
 #undef NEXT_POS
 }
@@ -298,13 +313,16 @@ void MyRenderer2::debugDraw3D(Scene* scene)
 	const mat4& proj_matrix = scene->getCamera()->computeProjectionMatrix();
 	const mat4& view_matrix = scene->getCamera()->computeViewMatrix();
 
-	// Draw the frustums of the lights:
+	// Draw the frustums of the lights and the photons maps results
 	{
 		glutil::Disable<GL_DEPTH_TEST> depth_test_state;
 		for(uint i=0 ; i < nb_lights ; i++)
 		{
 			Light* l = lights[i];
 			l->debugDrawFrustum(proj_matrix, view_matrix, vec3(1.0, 0.0, 0.0), false);
+			
+			PhotonsMap* photons_map = (PhotonsMap*)l->getUserData(LIGHT_DATA_PHOTONS_MAP);
+			photons_map->debugDraw3D(proj_matrix);
 		}
 	}
 }

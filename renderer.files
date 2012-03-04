@@ -13,6 +13,8 @@ media/shaders/debug_general/general_depth_peeling.frag
 media/shaders/debug_general/general_depth_peeling.vert
 media/shaders/debug_general/general_forward.frag
 media/shaders/debug_general/general_forward.vert
+media/shaders/debug/debug_photons_map.frag
+media/shaders/debug/debug_photons_map.vert
 media/shaders/debug/texture2D.frag
 media/shaders/debug/texture2D.vert
 media/shaders/debug/texture_rect.frag
@@ -223,8 +225,6 @@ src/renderer/utils/OCLRaytracer.cpp
 src/renderer/utils/OCLRaytracer.h
 src/renderer/utils/PhotonVolumesRenderer.cpp
 src/renderer/utils/PhotonVolumesRenderer.h
-src/renderer/utils/PhotonsAdvancer.cpp
-src/renderer/utils/PhotonsAdvancer.h
 src/renderer/utils/ShadowMap.cpp
 src/renderer/utils/ShadowMap.h
 src/renderer/utils/TextureBinding.cpp

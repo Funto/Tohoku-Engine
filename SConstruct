@@ -64,7 +64,6 @@ src/renderer/utils/TextureBinding.cpp
 src/renderer/utils/TexunitManager.cpp
 src/renderer/utils/GLRaytracer.cpp
 src/renderer/utils/TextureReducer.cpp
-src/renderer/utils/PhotonsAdvancer.cpp
 src/renderer/utils/PhotonVolumesRenderer.cpp
 src/scene/Camera.cpp
 src/scene/DAELoader.cpp
@@ -155,8 +154,8 @@ else:
 	env.Append(LIBS=['pthread'])
 
 env.Append(CPPDEFINES=['TIXML_USE_STL'])
-env.Append(CCFLAGS=['-g', '-O2', '-Wall'])
-env.Append(CCFLAGS=['-s', '-O2', '-Wall'])
+env.Append(CCFLAGS=['-g', '-Wall'])	# -O2
+env.Append(CCFLAGS=['-s', '-Wall'])	# -O2
 
 # ----------------------------------------------------------------------
 replace_src_obj(src_list)

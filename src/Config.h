@@ -59,8 +59,10 @@
 #define WIN_TITLE "3D renderer"
 //#define WIN_WIDTH 640
 //#define WIN_HEIGHT 480
-#define WIN_WIDTH 800
-#define WIN_HEIGHT 600
+//#define WIN_WIDTH 800
+//#define WIN_HEIGHT 600
+#define WIN_WIDTH 1280
+#define WIN_HEIGHT 720
 
 // Camera settings
 #define OVERRIDE_CAMERA_SETTINGS	// comment for keeping the values given by the COLLADA file
