@@ -238,3 +238,5 @@ src/renderer/utils/PhotonsAdvancer.h
 src/renderer/utils/PhotonsAdvancer.cpp
 src/renderer/utils/PhotonsMap.h
 src/renderer/utils/PhotonsMap.cpp
+src/renderer/utils/MinMaxMipmaps.h
+src/renderer/utils/MinMaxMipmaps.cpp
