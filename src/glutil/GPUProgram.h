@@ -123,6 +123,7 @@ public:
 	// Usage example: sendUniform("texunit", value);
 	void sendUniform(Hash h, GLint i);
 	void sendUniform(Hash h, GLfloat f);
+	void sendUniform(Hash h, const vec2& v);
 	void sendUniform(Hash h, const vec3& v);
 	void sendUniform(Hash h, const vec4& v);
 	void sendUniform(Hash h, const mat3& m, bool transpose=false);
@@ -131,6 +132,7 @@ public:
 	// If needed at runtime: sendUniform(uniform_name, value, Hash::AT_RUNTIME)
 	void sendUniform(const char* uniform_name, GLint i,                       Hash::Marker marker);
 	void sendUniform(const char* uniform_name, GLfloat f,                     Hash::Marker marker);
+	void sendUniform(const char* uniform_name, const vec2& v,                 Hash::Marker marker);
 	void sendUniform(const char* uniform_name, const vec3& v,                 Hash::Marker marker);
 	void sendUniform(const char* uniform_name, const vec4& v,                 Hash::Marker marker);
 	void sendUniform(const char* uniform_name, const mat3& m, bool transpose, Hash::Marker marker);

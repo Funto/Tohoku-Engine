@@ -10,6 +10,7 @@
 
 typedef glm::gtc::type_precision::uint32   uint;
 typedef glm::gtc::type_precision::uint8    uchar;
+typedef glm::gtc::type_precision::f32vec2  vec2;
 typedef glm::gtc::type_precision::f32vec3  vec3;
 typedef glm::gtc::type_precision::f32vec4  vec4;
 typedef glm::gtc::type_precision::f32mat3  mat3;

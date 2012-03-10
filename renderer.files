@@ -1,4 +1,5 @@
 renderer.files
+renderer.includes
 media/lights/light0.light.xml
 media/lights/light1.light.xml
 media/shaders/bounce_map.frag
@@ -27,6 +28,10 @@ media/shaders/fsquad.frag
 media/shaders/fsquad.vert
 media/shaders/general.frag
 media/shaders/general.vert
+media/shaders/min_max_mipmaps_first.vert
+media/shaders/min_max_mipmaps_first.frag
+media/shaders/min_max_mipmaps_next.vert
+media/shaders/min_max_mipmaps_next.frag
 media/shaders/library/ashikhmin_shirley.shader
 media/shaders/library/blinn_phong.shader
 media/shaders/library/clipping.shader

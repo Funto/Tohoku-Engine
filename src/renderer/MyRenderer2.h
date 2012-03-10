@@ -13,7 +13,8 @@ class ArrayElementContainer;
 class RasterRenderer;
 class DeferredShadingRenderer;
 //class PhotonsAdvancer;
-class PhotonVolumesRenderer;
+//class PhotonVolumesRenderer;
+class MinMaxMipmaps;
 
 class MyRenderer2 : public Renderer
 {
@@ -22,6 +23,7 @@ private:
 	DeferredShadingRenderer*	direct_renderer;	// direct lighting
 	//PhotonsAdvancer*			photons_advancer;
 	//PhotonVolumesRenderer*		photon_volumes_renderer;	// TODO
+	MinMaxMipmaps*				min_max_mipmaps;
 
 	bool		use_shadow_mapping;	// NB: current design only allows to set the usage of shadow mapping
 									// at creation/deletion of the renderer.

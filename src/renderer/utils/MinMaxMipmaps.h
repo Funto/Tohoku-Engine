@@ -12,10 +12,15 @@ private:
 	uint target_width;
 	uint target_height;
 
-	glutil::GPUProgram* program;
+	glutil::GPUProgram* program_first;	// first layer
+	glutil::GPUProgram* program_next;	// next layers
 
 	GLuint id_vao;
 	GLuint id_vbo;
+	
+	uint nb_layers;
+	GLuint* id_fbo;
+	GLuint* id_min_max_tex;	// TODO: use mipmaps
 
 public:
 	MinMaxMipmaps(uint target_width, uint target_height);
@@ -24,8 +29,14 @@ public:
 	void setup();
 	void cleanup();
 
-	void run();
-	void createProgram();
+	void run(GLuint id_tex_position);
+	
+	uint getNbLayers() const {return nb_layers;}
+	GLuint getMinMaxTex(int i) const {return id_min_max_tex[i];}
+	
+private:
+	void createFBOs();
+	void createPrograms();
 	void createVBOAndVAO();
 };
 

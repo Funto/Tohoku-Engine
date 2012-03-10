@@ -454,6 +454,10 @@ void GPUProgram::sendUniform(Hash h, GLfloat f)
 {
 	glUniform1f(getUniformLocation(h), f);
 }
+void GPUProgram::sendUniform(Hash h, const vec2& v)
+{
+	glUniform2fv(getUniformLocation(h), 1, &v[0]);
+}
 void GPUProgram::sendUniform(Hash h, const vec3& v)
 {
 	glUniform3fv(getUniformLocation(h), 1, &v[0]);
@@ -496,6 +500,13 @@ void GPUProgram::sendUniform(const char* uniform_name, GLfloat f,               
 	GLint location = getUniformLocation(Hash(uniform_name, Hash::AT_RUNTIME));
 	CHECK_LOCATION(uniform_name, location);
 	glUniform1f(location, f);
+}
+
+void GPUProgram::sendUniform(const char* uniform_name, const vec2& v,                 Hash::Marker marker)
+{
+	GLint location = getUniformLocation(Hash(uniform_name, Hash::AT_RUNTIME));
+	CHECK_LOCATION(uniform_name, location);
+	glUniform2fv(location, 1, &v[0]);
 }
 
 void GPUProgram::sendUniform(const char* uniform_name, const vec3& v,                 Hash::Marker marker)

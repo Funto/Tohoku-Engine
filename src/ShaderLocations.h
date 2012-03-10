@@ -52,6 +52,12 @@
 #define PHOTONS_MAP_FRAG_DATA_OUTPUT0 0
 #define PHOTONS_MAP_FRAG_DATA_OUTPUT1 1
 
+// ---------------------------------------------------------------------
+// MIN-MAX MIPMAPS
+#define MIN_MAX_MIPMAPS_ATTRIB_POSITION 0
+
+#define MIN_MAX_MIPMAPS_FRAG_DATA_OUTPUT 0
+
 // Debug:
 #define DEBUG_PHOTONS_MAP_ATTRIB_POSITION 0
 

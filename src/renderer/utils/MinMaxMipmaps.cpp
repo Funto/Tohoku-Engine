@@ -3,25 +3,22 @@
 #include "MinMaxMipmaps.h"
 
 #include "MinMaxMipmaps.h"
-#include "../../glutil/RAII.h"
+#include "../../glutil/glutil.h"
+#include "../../ShaderLocations.h"
 #include <sstream>
 using namespace std;
-
-// ---------------------------------------------------------------------
-// Vertex attrib locations:
-#define ATTRIB_POSITION 0
-
-// Fragment output locations are given in GLRaytracerConfig.h
-// because they are shared between GLRaytracer and TextureRenderer
-// (they render to the same FBO)
 
 // ---------------------------------------------------------------------
 MinMaxMipmaps::MinMaxMipmaps(uint target_width, uint target_height)
 : target_width(target_width),
   target_height(target_height),
-  program(NULL),
+  program_first(NULL),
+  program_next(NULL),
   id_vao(0),
-  id_vbo(0)
+  id_vbo(0),
+  nb_layers(0),
+  id_fbo(NULL),
+  id_min_max_tex(NULL)
 {
 }
 
@@ -32,16 +29,37 @@ MinMaxMipmaps::~MinMaxMipmaps()
 // ---------------------------------------------------------------------
 void MinMaxMipmaps::setup()
 {
-	createProgram();
+	createFBOs();
+	createPrograms();
 	createVBOAndVAO();
 }
 
 void MinMaxMipmaps::cleanup()
 {
-/*	assert(program != NULL);
-	delete program;
-	program = NULL;
-
+	// Programs
+	assert(program_first != NULL);
+	delete program_first;
+	program_first = NULL;
+	
+	assert(program_next != NULL);
+	delete program_next;
+	program_next = NULL;
+	
+	// FBOs and textures
+	assert(nb_layers > 0);
+	assert(id_fbo != NULL);
+	assert(id_min_max_tex != NULL);
+	
+	glDeleteFramebuffers(nb_layers, id_fbo);
+	glDeleteTextures(nb_layers, id_min_max_tex);
+	nb_layers = 0;
+	delete [] id_fbo;
+	id_fbo = NULL;
+	
+	delete [] id_min_max_tex;
+	id_min_max_tex = NULL;
+	
+	// VBO/VAO
 	assert(id_vbo != 0);
 	glDeleteBuffers(1, &id_vbo);
 	id_vbo = 0;
@@ -49,113 +67,198 @@ void MinMaxMipmaps::cleanup()
 	assert(id_vao != 0);
 	glDeleteVertexArrays(1, &id_vao);
 	id_vao = 0;
-*/
 }
 
 // ---------------------------------------------------------------------
-void MinMaxMipmaps::run()
+void MinMaxMipmaps::run(GLuint id_tex_position)
 {
-/*	uint texunit = 0;
-
-	// Bind the FBO:
-	glutil::BindFramebuffer fbo_binding(gl_raytracer->getFBO());
-
-	// DEBUG
-	//glClearColor(1.0, 0.0, 1.0, 0.0);
-	//glClear(GL_COLOR_BUFFER_BIT);
-	// END DEBUG
-
-	// Set the viewport:
-	glutil::SetViewport viewport(offset_x, 0, 1, target_height);
-
+	uint w = target_width;
+	uint h = target_height;
+	
 	// Disable the depth test:
 	glutil::Disable<GL_DEPTH_TEST> depth_test_state;
-
-	// Bind the GPU program:
-	program->use();
-
-	// Bind the textures to the texunits and send the texunits as uniforms:
-#ifdef DEBUG_USE_DEBUG_FBO_ATTACHMENT
-	BIND_TEX(GL_TEXTURE_RECTANGLE, gl_raytracer->getDebugTex(),     "tex_debug",       program, texunit);
-#endif
-	BIND_TEX(GL_TEXTURE_RECTANGLE, gl_raytracer->getPositionTex(),  "tex_position",    program, texunit);
-	BIND_TEX(GL_TEXTURE_RECTANGLE, gl_raytracer->getPowerTex(),     "tex_power",       program, texunit);
-	BIND_TEX(GL_TEXTURE_RECTANGLE, gl_raytracer->getComingDirTex(), "tex_coming_dir",  program, texunit);
-
-	// Send remaning uniform(s):
-	program->sendUniform("offset_x", GLint(offset_x));
-
-	// Bind the VAO and draw
-	const uint nb_vertices = 6;
-	glBindVertexArray(id_vao);
-	glDrawArrays(GL_TRIANGLES, 0, nb_vertices);
-*/
+	
+	for(uint i=0 ; i < nb_layers ; i++)
+	{
+		glutil::BindFramebuffer fbo_binding(id_fbo[i]);
+		
+		glutil::SetViewport viewport(0, 0, w, h);
+		
+		if(i == 0)
+		{
+			glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+			glClear(GL_COLOR_BUFFER_BIT);
+			
+			program_first->use();
+			
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_RECTANGLE, id_tex_position);
+			program_first->sendUniform("tex_position", 0);
+		}
+		else
+		{
+			program_next->use();
+			
+			const GLuint id_tex_prev_layer = id_min_max_tex[i-1];
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_RECTANGLE, id_tex_prev_layer);
+			program_next->sendUniform("tex_prev_layer", 0);
+			
+			program_next->sendUniform("target_size", vec2(w, h));
+		}
+	
+		// Bind the VAO and draw
+		const uint nb_vertices = 6;
+		glBindVertexArray(id_vao);
+		glDrawArrays(GL_TRIANGLES, 0, nb_vertices);
+		
+		w >>= 1;
+		h >>= 1;
+	}
 }
 
 // ---------------------------------------------------------------------
-void MinMaxMipmaps::createProgram()
+void MinMaxMipmaps::createFBOs()
 {
-/*	stringstream ss;
+	// Compute nb_layers
+	uint w = target_width;
+	uint h = target_height;
+	nb_layers = 0;
+	while(w >= 16)	// up to 16x9 - TODO: common denominator
+	{
+		nb_layers++;
+		w >>= 1;
+		h >>= 1;
+	}
+	
+	id_fbo = new GLuint[nb_layers];
+	id_min_max_tex = new GLuint[nb_layers];
+	
+	glGenFramebuffers(nb_layers, id_fbo);
+	
+	// Create all layers
+	w = target_width;
+	h = target_height;
+	for(uint i=0 ; i < nb_layers ; i++)
+	{
+		// Setup the textures:
+		id_min_max_tex[i] = glutil::createTextureRectRGBAF(w, h, true);
+	
+		GL_CHECK();
+	
+		// Setup a FBO:
+		glutil::BindFramebuffer fbo_binding(id_fbo[i]);
+	
+		// - attach the texture:
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_RECTANGLE, id_min_max_tex[i], 0);
+	
+		GL_CHECK();
+	
+		// - specify the draw buffers :
+		static const GLenum draw_buffers[] = {
+			GL_COLOR_ATTACHMENT0,
+		};
+		glDrawBuffers(sizeof(draw_buffers) / sizeof(GLenum), draw_buffers);
+	
+		// Check the FBO:
+		GLenum fbo_status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+	
+		if(fbo_status == GL_FRAMEBUFFER_COMPLETE)
+			logSuccess("FBO creation");
+		else
+			logError("FBO not complete");
+		
+		w >>= 1;
+		h >>= 1;
+	}
+}
+
+// ---------------------------------------------------------------------
+void MinMaxMipmaps::createPrograms()
+{
+	stringstream ss;
 	bool ok = false;
 
-	program = new glutil::GPUProgram(	"media/shaders/raytracer/texture_reduce.vert",
-										"media/shaders/raytracer/texture_reduce.frag");
-
-	// Prepare the list of symbols:
-	Preprocessor::SymbolList symbols;
-
-	ss.str(""); ss << target_width << flush;
-	symbols.push_back(PreprocSym("_TARGET_WIDTH_", ss.str()));
-
-	ss.str(""); ss << target_height << flush;
-	symbols.push_back(PreprocSym("_TARGET_HEIGHT_", ss.str()));
-
-#ifdef DEBUG_USE_DEBUG_FBO_ATTACHMENT
-	symbols.push_back(PreprocSym("_DEBUG_USE_DEBUG_FBO_ATTACHMENT_"));
-#endif
-
-	// Set the symbols:
-	program->getPreprocessor()->setSymbols(symbols);
-
-	// Compile, attach, set the locations, link
-	ok = program->compileAndAttach();
-	assert(ok);
-
-	program->bindAttribLocations(ATTRIB_POSITION,  "vertex_position",
-								 0,                 NULL);
-
-	program->bindFragDataLocations(
-											#ifdef DEBUG_USE_DEBUG_FBO_ATTACHMENT
-												FRAG_DATA_DEBUG,      "frag_debug",
-											#endif
-												FRAG_DATA_POSITION,   "frag_position",
-												FRAG_DATA_POWER,      "frag_power",
-												FRAG_DATA_COMING_DIR, "frag_coming_dir",
-												0,                  NULL
-												);
-
-	ok &= program->link();
-	assert(ok);
-
-	// Set the uniform names
-	list<string> uniform_names;
-	uniform_names.push_back("tex_debug");
-	uniform_names.push_back("tex_position");
-	uniform_names.push_back("tex_power");
-	uniform_names.push_back("tex_coming_dir");
-	uniform_names.push_back("offset_x");
-
-	program->setUniformNames(uniform_names);
-
-	// Validate
-	program->validate();
-*/
+	// First layer program
+	{
+		program_first = new glutil::GPUProgram(	"media/shaders/min_max_mipmaps_first.vert",
+												"media/shaders/min_max_mipmaps_first.frag");
+	
+		// Prepare the list of symbols:
+		Preprocessor::SymbolList symbols;
+	
+		ss.str(""); ss << target_width << flush;
+		symbols.push_back(PreprocSym("_TARGET_WIDTH_", ss.str()));
+	
+		ss.str(""); ss << target_height << flush;
+		symbols.push_back(PreprocSym("_TARGET_HEIGHT_", ss.str()));
+	
+		// Set the symbols:
+		program_first->getPreprocessor()->setSymbols(symbols);
+	
+		// Compile, attach, set the locations, link
+		ok = program_first->compileAndAttach();
+		assert(ok);
+	
+		program_first->bindAttribLocations(MIN_MAX_MIPMAPS_ATTRIB_POSITION, "vertex_position",
+		                                   0, NULL);
+	
+		program_first->bindFragDataLocations(	MIN_MAX_MIPMAPS_FRAG_DATA_OUTPUT, "frag_output",
+		                                     0, NULL);
+	
+		ok &= program_first->link();
+		assert(ok);
+	
+		// Set the uniform names
+		list<string> uniform_names;
+		uniform_names.push_back("tex_position");
+	
+		program_first->setUniformNames(uniform_names);
+	
+		// Validate
+		program_first->validate();
+	}
+	
+	// Next layers program
+	{
+		program_next = new glutil::GPUProgram(	"media/shaders/min_max_mipmaps_next.vert",
+												"media/shaders/min_max_mipmaps_next.frag");
+	
+		// Prepare the list of symbols:
+		Preprocessor::SymbolList symbols;
+	
+		// Set the symbols:
+		program_next->getPreprocessor()->setSymbols(symbols);
+	
+		// Compile, attach, set the locations, link
+		ok = program_next->compileAndAttach();
+		assert(ok);
+	
+		program_next->bindAttribLocations(MIN_MAX_MIPMAPS_ATTRIB_POSITION, "vertex_position",
+		                                  0, NULL);
+	
+		program_next->bindFragDataLocations(MIN_MAX_MIPMAPS_FRAG_DATA_OUTPUT, "frag_output",
+		                                    0, NULL);
+	
+		ok &= program_next->link();
+		assert(ok);
+	
+		// Set the uniform names
+		list<string> uniform_names;
+		uniform_names.push_back("tex_prev_layer");
+		uniform_names.push_back("target_size");
+	
+		program_next->setUniformNames(uniform_names);
+	
+		// Validate
+		program_next->validate();
+	}
 }
 
 // ---------------------------------------------------------------------
 void MinMaxMipmaps::createVBOAndVAO()
 {
-/*	// Create the VAO:
+	// Create the VAO:
 	glGenVertexArrays(1, &id_vao);
 
 	// Bind the VAO:
@@ -183,11 +286,10 @@ void MinMaxMipmaps::createVBOAndVAO()
 	const uint nb_vertices = 6;
 
 	// - enable attributes:
-	glEnableVertexAttribArray(ATTRIB_POSITION);
+	glEnableVertexAttribArray(MIN_MAX_MIPMAPS_ATTRIB_POSITION);
 
 	// - vertices pointer:
 	ptrdiff_t offset = NULL;
-	glVertexAttribPointer(ATTRIB_POSITION,  2, GL_FLOAT, GL_FALSE, 0, (const GLvoid*)offset);
+	glVertexAttribPointer(MIN_MAX_MIPMAPS_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, (const GLvoid*)offset);
 	offset += sizeof(GLfloat)*nb_vertices*2;
-*/
 }

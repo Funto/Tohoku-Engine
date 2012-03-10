@@ -10,7 +10,8 @@
 #include "utils/GBuffer.h"
 #include "utils/GLRaytracer.h"
 //#include "utils/PhotonsAdvancer.h"
-#include "utils/PhotonVolumesRenderer.h"
+//#include "utils/PhotonVolumesRenderer.h"
+#include "utils/MinMaxMipmaps.h"
 #include "../scene/Camera.h"
 #include "../scene/Scene.h"
 #include "../scene/Light.h"
@@ -33,6 +34,7 @@ MyRenderer2::MyRenderer2(uint width, uint height,
   direct_renderer(NULL),
   //photons_advancer(NULL),
   //photon_volumes_renderer(NULL),	// TODO
+  min_max_mipmaps(NULL),
   use_shadow_mapping(use_shadow_mapping),
   use_visibility_maps(use_visibility_maps),
   brdf_function(brdf_function)
@@ -67,10 +69,15 @@ MyRenderer2::MyRenderer2(uint width, uint height,
 														kernel_filename,
 														brdf_function);
 */
+	// Min-max mipmaps
+	min_max_mipmaps = new MinMaxMipmaps(width, height);
 }
 
 MyRenderer2::~MyRenderer2()
 {
+	// Min-max mipmaps
+	delete min_max_mipmaps;
+	
 	// Photon volume renderer:
 	//delete photon_volumes_renderer;	// TODO
 	
@@ -100,11 +107,17 @@ void MyRenderer2::setup()
 
 	// Setup the photon volumes renderer:
 	//photon_volumes_renderer->setup();	// TODO
+	
+	// Min-max mipmaps
+	min_max_mipmaps->setup();
 }
 
 // Called when we switch to another renderer or close the program
 void MyRenderer2::cleanup()
 {
+	// Min-max mipmaps
+	min_max_mipmaps->cleanup();
+	
 	// Photon volume renderer:
 	//photon_volumes_renderer->cleanup();	// TODO
 
@@ -188,6 +201,9 @@ void MyRenderer2::renderArray(Scene* scene)
 
 	// Direct lighting
 	direct_renderer->renderArray(scene);
+	
+	// Depth min-max mipmapping
+	min_max_mipmaps->run(direct_renderer->getGBuffer()->getTexPositions());
 
 	// Compute the eye's projection and view matrix:
 	mat4 eye_view = camera->computeViewMatrix();
@@ -294,6 +310,23 @@ void MyRenderer2::debugDraw2D(Scene* scene)
 
 		glutil::displayTextureRect(photons_map->getTexOutput0(), x, y, size, size); NEXT_POS();
 		glutil::displayTextureRect(photons_map->getTexOutput1(), x, y, size, size); NEXT_POS();
+	}
+	
+	// Min-max textures:
+	{
+		uint w = getWidth();
+		uint h = getHeight();
+		uint x_start = x;
+		for(uint i=0 ; i < min_max_mipmaps->getNbLayers() ; i++)
+		{
+			glutil::displayTextureRect(min_max_mipmaps->getMinMaxTex(i), x, y, w, h); //NEXT_POS();
+			x = x_start + (i%2);
+			if(i%2 == 0)
+				y++;
+			
+			w >>= 1;
+			h >>= 1;
+		}
 	}
 
 #undef NEXT_POS
