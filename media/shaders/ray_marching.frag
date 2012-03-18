@@ -11,7 +11,7 @@ precision mediump int;
 // Uniforms:
 uniform sampler2DRect tex_bounce_map_0;
 uniform sampler2DRect tex_bounce_map_1;
-uniform sampler2DRect tex_screen_depth;
+uniform sampler2DRect tex_screen_positions;
 uniform sampler2DRect tex_light_positions;
 
 uniform mat4 light_to_eye_matrix;
@@ -79,15 +79,32 @@ void main()
 		vec3 first_vertex_ndc  = first_vertex_proj_pos.xyz  / first_vertex_proj_pos.w;
 		vec3 second_vertex_ndc = second_vertex_proj_pos.xyz / second_vertex_proj_pos.w;
 		
+		// BEGIN DEBUG
+		frag_output0 = vec4(eye_space_pos, 0);
+		frag_output1 = vec4(eye_space_pos + 0.1*eye_space_dir, 0);
+		// END DEBUG
+		
 		// TODO: trace a ray
+		vec2 ray_start = 0.5*(first_vertex_ndc.xy + 1.0);	// starting pos, in [0, 1]² coordinates.
+		
+		// ray_inc: by how much we need to increment start_pos to do one step
+		vec2 ray_inc = normalize(second_vertex_ndc.xy - first_vertex_ndc.xy);
+		float ray_inc_len = 1.0 / max(ray_inc.x, ray_inc.y);
+		ray_inc *= ray_inc_len;	// => the greater of dx and dy is equal to 1
+		
+		/*for(int i=0 ; i < 1000 ; i++)
+		{
+			f
+		}*/
+		
 		//frag_output0 = texel_bounce_map_0;
 		//frag_output1 = texel_bounce_map_1;
 		
-		frag_output0 = vec4(eye_space_pos, 0);
-		frag_output1 = vec4(eye_space_pos + 0.3*eye_space_dir, 0);
+		//frag_output0 = vec4(eye_space_pos, 0);
+		//frag_output1 = vec4(eye_space_pos + 0.3*eye_space_dir, 0);
 		
 /*		// TODO: only a test for now
-		float depth = texture(tex_screen_depth, gl_FragCoord.xy).r;
+		float depth = texture(tex_screen_positions, gl_FragCoord.xy).z;
 		frag_output0.r = depth;
 		frag_output1.r = depth;
 		

@@ -314,8 +314,8 @@ void MyRenderer2::debugDraw2D(Scene* scene)
 	
 	// Min-max textures:
 	{
-		uint w = getWidth();
-		uint h = getHeight();
+		uint w = getWidth() >> 1;
+		uint h = getHeight() >> 1;
 		uint x_start = x;
 		for(uint i=0 ; i < min_max_mipmaps->getNbLayers() ; i++)
 		{

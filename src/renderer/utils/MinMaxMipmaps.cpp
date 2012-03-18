@@ -72,8 +72,8 @@ void MinMaxMipmaps::cleanup()
 // ---------------------------------------------------------------------
 void MinMaxMipmaps::run(GLuint id_tex_position)
 {
-	uint w = target_width;
-	uint h = target_height;
+	uint w = target_width >> 1;
+	uint h = target_height >> 1;
 	
 	// Disable the depth test:
 	glutil::Disable<GL_DEPTH_TEST> depth_test_state;
@@ -94,6 +94,8 @@ void MinMaxMipmaps::run(GLuint id_tex_position)
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_RECTANGLE, id_tex_position);
 			program_first->sendUniform("tex_position", 0);
+			
+			program_next->sendUniform("source_size", vec2(w, h));
 		}
 		else
 		{
@@ -104,7 +106,7 @@ void MinMaxMipmaps::run(GLuint id_tex_position)
 			glBindTexture(GL_TEXTURE_RECTANGLE, id_tex_prev_layer);
 			program_next->sendUniform("tex_prev_layer", 0);
 			
-			program_next->sendUniform("target_size", vec2(w, h));
+			program_next->sendUniform("source_size", vec2(w, h));
 		}
 	
 		// Bind the VAO and draw
@@ -121,8 +123,8 @@ void MinMaxMipmaps::run(GLuint id_tex_position)
 void MinMaxMipmaps::createFBOs()
 {
 	// Compute nb_layers
-	uint w = target_width;
-	uint h = target_height;
+	uint w = target_width >> 1;
+	uint h = target_height >> 1;
 	nb_layers = 0;
 	while(w >= 16)	// up to 16x9 - TODO: common denominator
 	{
@@ -137,8 +139,8 @@ void MinMaxMipmaps::createFBOs()
 	glGenFramebuffers(nb_layers, id_fbo);
 	
 	// Create all layers
-	w = target_width;
-	h = target_height;
+	w = target_width >> 1;
+	h = target_height >> 1;
 	for(uint i=0 ; i < nb_layers ; i++)
 	{
 		// Setup the textures:
@@ -184,18 +186,6 @@ void MinMaxMipmaps::createPrograms()
 		program_first = new glutil::GPUProgram(	"media/shaders/min_max_mipmaps_first.vert",
 												"media/shaders/min_max_mipmaps_first.frag");
 	
-		// Prepare the list of symbols:
-		Preprocessor::SymbolList symbols;
-	
-		ss.str(""); ss << target_width << flush;
-		symbols.push_back(PreprocSym("_TARGET_WIDTH_", ss.str()));
-	
-		ss.str(""); ss << target_height << flush;
-		symbols.push_back(PreprocSym("_TARGET_HEIGHT_", ss.str()));
-	
-		// Set the symbols:
-		program_first->getPreprocessor()->setSymbols(symbols);
-	
 		// Compile, attach, set the locations, link
 		ok = program_first->compileAndAttach();
 		assert(ok);
@@ -212,6 +202,7 @@ void MinMaxMipmaps::createPrograms()
 		// Set the uniform names
 		list<string> uniform_names;
 		uniform_names.push_back("tex_position");
+		uniform_names.push_back("source_size");
 	
 		program_first->setUniformNames(uniform_names);
 	
@@ -246,7 +237,7 @@ void MinMaxMipmaps::createPrograms()
 		// Set the uniform names
 		list<string> uniform_names;
 		uniform_names.push_back("tex_prev_layer");
-		uniform_names.push_back("target_size");
+		uniform_names.push_back("source_size");
 	
 		program_next->setUniformNames(uniform_names);
 	

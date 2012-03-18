@@ -26,7 +26,7 @@ using namespace std;
 #define PHOTONS_MAP_TEXUNIT_BOUNCE_MAP_0    0
 #define PHOTONS_MAP_TEXUNIT_BOUNCE_MAP_1    1
 #define PHOTONS_MAP_TEXUNIT_LIGHT_POSITIONS 2
-#define PHOTONS_MAP_TEXUNIT_SCREEN_DEPTH    3
+#define PHOTONS_MAP_TEXUNIT_SCREEN_POSITIONS    3
 
 #define DEBUG_PHOTONS_MAP_TEXUNIT_PHOTONS_MAP_0    0
 #define DEBUG_PHOTONS_MAP_TEXUNIT_PHOTONS_MAP_1    1
@@ -96,10 +96,10 @@ void PhotonsMap::run(const BounceMap* bounce_map,
 	GL_CHECK();
 
 	// Send the uniforms:
-	program->sendUniform("tex_bounce_map_0",    PHOTONS_MAP_TEXUNIT_BOUNCE_MAP_0);
-	program->sendUniform("tex_bounce_map_1",    PHOTONS_MAP_TEXUNIT_BOUNCE_MAP_1);
-	program->sendUniform("tex_light_positions", PHOTONS_MAP_TEXUNIT_LIGHT_POSITIONS);
-	program->sendUniform("tex_screen_depth",    PHOTONS_MAP_TEXUNIT_SCREEN_DEPTH);
+	program->sendUniform("tex_bounce_map_0",     PHOTONS_MAP_TEXUNIT_BOUNCE_MAP_0);
+	program->sendUniform("tex_bounce_map_1",     PHOTONS_MAP_TEXUNIT_BOUNCE_MAP_1);
+	program->sendUniform("tex_light_positions",  PHOTONS_MAP_TEXUNIT_LIGHT_POSITIONS);
+	program->sendUniform("tex_screen_positions", PHOTONS_MAP_TEXUNIT_SCREEN_POSITIONS);
 	
 	// Bind the textures:
 	glActiveTexture(GL_TEXTURE0 + PHOTONS_MAP_TEXUNIT_BOUNCE_MAP_0);
@@ -111,8 +111,8 @@ void PhotonsMap::run(const BounceMap* bounce_map,
 	glActiveTexture(GL_TEXTURE0 + PHOTONS_MAP_TEXUNIT_LIGHT_POSITIONS);
 	glBindTexture(GL_TEXTURE_RECTANGLE, light_gbuffer->getTexPositions());
 	
-	glActiveTexture(GL_TEXTURE0 + PHOTONS_MAP_TEXUNIT_SCREEN_DEPTH);
-	glBindTexture(GL_TEXTURE_RECTANGLE, screen_gbuffer->getTexDepth());
+	glActiveTexture(GL_TEXTURE0 + PHOTONS_MAP_TEXUNIT_SCREEN_POSITIONS);
+	glBindTexture(GL_TEXTURE_RECTANGLE, screen_gbuffer->getTexPositions());
 	
 	// Compute and send the matrix used for going from light space to eye space:
 	mat4 light_view = getLight()->computeViewMatrix();
@@ -236,7 +236,7 @@ void PhotonsMap::createProgram()
 		program->setUniformNames("tex_bounce_map_0",
 								 "tex_bounce_map_1",
 		                         "tex_light_positions",
-		                         "tex_screen_depth",
+		                         "tex_screen_positions",
 		                         "light_to_eye_matrix",
 		                         "eye_proj_matrix",
 								 NULL);

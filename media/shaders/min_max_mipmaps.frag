@@ -13,5 +13,5 @@ out vec4 frag_output;
 
 void main()
 {
-	frag_output = vec4(-0.1*texture(tex_position, texcoords).zz, 0, 1);
+	frag_output = vec4(-texture(tex_position, texcoords).zz, 0, 1);
 }
