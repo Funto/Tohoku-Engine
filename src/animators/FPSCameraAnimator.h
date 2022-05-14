@@ -9,8 +9,8 @@ class FPSCameraAnimator : public CameraAnimator
 {
 private:
 	bool button_pressed;
-	int original_mouse_x;
-	int original_mouse_y;
+	double original_mouse_x;
+	double original_mouse_y;
 	mat3 original_orientation;
 
 public:

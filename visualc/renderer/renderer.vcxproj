@@ -19,12 +19,14 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -51,15 +53,16 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_MBCS;GLEW_STATIC;TIXML_USE_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\include;..\..\glfw-3.3.7.bin.WIN32\include;..\..\glew-2.1.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_DEBUG;_MBCS;GLEW_STATIC;TIXML_USE_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glew32s.lib;opengl32.lib;pthreadVCE2.lib;glfwd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -68,24 +71,27 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_MBCS;GLEW_STATIC;TIXML_USE_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\include;..\..\glfw-3.3.7.bin.WIN32\include;..\..\glew-2.1.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_MBCS;GLEW_STATIC;TIXML_USE_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>glew32s.lib;opengl32.lib;pthreadVCE2.lib;glfw.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\glew-2.1.0\src\glew.c" />
     <ClCompile Include="..\..\src\animators\CameraAnimator.cpp" />
     <ClCompile Include="..\..\src\animators\FPSCameraAnimator.cpp" />
     <ClCompile Include="..\..\src\animators\KeyboardCameraAnimator.cpp" />
     <ClCompile Include="..\..\src\animators\LightSceneAnimator.cpp" />
     <ClCompile Include="..\..\src\animators\SceneAnimator.cpp" />
     <ClCompile Include="..\..\src\Application.cpp" />
+    <ClCompile Include="..\..\src\clutil\clutil.cpp" />
     <ClCompile Include="..\..\src\glutil\glutil.cpp" />
     <ClCompile Include="..\..\src\glutil\GPUProgram.cpp" />
     <ClCompile Include="..\..\src\glutil\Quad.cpp" />
@@ -104,6 +110,7 @@
     <ClCompile Include="..\..\src\renderer\DepthPeelingRenderer.cpp" />
     <ClCompile Include="..\..\src\renderer\MultiLayerRenderer.cpp" />
     <ClCompile Include="..\..\src\renderer\MyRenderer.cpp" />
+    <ClCompile Include="..\..\src\renderer\MyRenderer2.cpp" />
     <ClCompile Include="..\..\src\renderer\RasterRenderer.cpp" />
     <ClCompile Include="..\..\src\renderer\RaytraceRenderer.cpp" />
     <ClCompile Include="..\..\src\renderer\Renderer.cpp" />
@@ -112,6 +119,9 @@
     <ClCompile Include="..\..\src\renderer\utils\GBuffer.cpp" />
     <ClCompile Include="..\..\src\renderer\utils\GBufferRenderer.cpp" />
     <ClCompile Include="..\..\src\renderer\utils\GLRaytracer.cpp" />
+    <ClCompile Include="..\..\src\renderer\utils\MinMaxMipmaps.cpp" />
+    <ClCompile Include="..\..\src\renderer\utils\OCLRaytracer.cpp" />
+    <ClCompile Include="..\..\src\renderer\utils\PhotonsMap.cpp" />
     <ClCompile Include="..\..\src\renderer\utils\PhotonVolumesRenderer.cpp" />
     <ClCompile Include="..\..\src\renderer\utils\ShadowMap.cpp" />
     <ClCompile Include="..\..\src\renderer\utils\TextureBinding.cpp" />
@@ -152,6 +162,7 @@
     <ClInclude Include="..\..\src\animators\SceneAnimator.h" />
     <ClInclude Include="..\..\src\Application.h" />
     <ClInclude Include="..\..\src\Boundaries.h" />
+    <ClInclude Include="..\..\src\clutil\clutil.h" />
     <ClInclude Include="..\..\src\Common.h" />
     <ClInclude Include="..\..\src\CommonIndices.h" />
     <ClInclude Include="..\..\src\Config.h" />
@@ -175,6 +186,7 @@
     <ClInclude Include="..\..\src\renderer\DepthPeelingRenderer.h" />
     <ClInclude Include="..\..\src\renderer\MultiLayerRenderer.h" />
     <ClInclude Include="..\..\src\renderer\MyRenderer.h" />
+    <ClInclude Include="..\..\src\renderer\MyRenderer2.h" />
     <ClInclude Include="..\..\src\renderer\RasterRenderer.h" />
     <ClInclude Include="..\..\src\renderer\RaytraceRenderer.h" />
     <ClInclude Include="..\..\src\renderer\Renderer.h" />
@@ -184,6 +196,9 @@
     <ClInclude Include="..\..\src\renderer\utils\GBufferRenderer.h" />
     <ClInclude Include="..\..\src\renderer\utils\GLRaytracer.h" />
     <ClInclude Include="..\..\src\renderer\utils\GLRaytracerConfig.h" />
+    <ClInclude Include="..\..\src\renderer\utils\MinMaxMipmaps.h" />
+    <ClInclude Include="..\..\src\renderer\utils\OCLRaytracer.h" />
+    <ClInclude Include="..\..\src\renderer\utils\PhotonsMap.h" />
     <ClInclude Include="..\..\src\renderer\utils\PhotonVolumesRenderer.h" />
     <ClInclude Include="..\..\src\renderer\utils\ShadowMap.h" />
     <ClInclude Include="..\..\src\renderer\utils\TextureBinding.h" />

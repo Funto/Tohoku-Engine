@@ -151,7 +151,7 @@ void DebugRenderer::renderArray(Scene* scene)
 {
 	// BEGIN DEBUG
 	int width, height;
-	glfwGetWindowSize(&width, &height);
+	glfwGetFramebufferSize(GLFWWindow::getInstance()->getWindow(), &width, &height);
 	glViewport(0, 0, width, width);
 	// END DEBUG
 

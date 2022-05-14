@@ -1,44 +1,37 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// OpenGL Mathematics Copyright (c) 2005 - 2009 G-Truc Creation (www.g-truc.net)
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Created : 2009-03-06
-// Updated : 2009-03-09
-// Licence : This source is under MIT License
-// File    : glm/gtx/gradient_paint.inl
-///////////////////////////////////////////////////////////////////////////////////////////////////
+/// @ref gtx_gradient_paint
+/// @file glm/gtx/gradient_paint.inl
 
-namespace glm{
-namespace gtx{
-namespace gradient_paint{
-
-	template <typename valType>
-	valType radialGradient(
-		glm::detail::tvec2<valType> const & Center,
-		valType const & Radius,
-		glm::detail::tvec2<valType> const & Focal,
-		glm::detail::tvec2<valType> const & Position)
+namespace glm
+{
+	template <typename T, precision P>
+	GLM_FUNC_QUALIFIER T radialGradient
+	(
+		tvec2<T, P> const & Center,
+		T const & Radius,
+		tvec2<T, P> const & Focal,
+		tvec2<T, P> const & Position
+	)
 	{
-		glm::detail::tvec2<valType> F = Focal - Center;
-		glm::detail::tvec2<valType> D = Position - Focal;
-		valType Radius2 = gtx::optimum_pow::pow2(Radius);
-		valType Fx2 = gtx::optimum_pow::pow2(F.x);
-		valType Fy2 = gtx::optimum_pow::pow2(F.y);
+		tvec2<T, P> F = Focal - Center;
+		tvec2<T, P> D = Position - Focal;
+		T Radius2 = pow2(Radius);
+		T Fx2 = pow2(F.x);
+		T Fy2 = pow2(F.y);
 
-		valType Numerator = (D.x * F.x + D.y * F.y) + glm::sqrt(Radius2 * (gtx::optimum_pow::pow2(D.x) + gtx::optimum_pow::pow2(D.y)) - gtx::optimum_pow::pow2(D.x * F.y - D.y * F.x));
-		valType Denominator = Radius2 - (Fx2 + Fy2);
+		T Numerator = (D.x * F.x + D.y * F.y) + sqrt(Radius2 * (pow2(D.x) + pow2(D.y)) - pow2(D.x * F.y - D.y * F.x));
+		T Denominator = Radius2 - (Fx2 + Fy2);
 		return Numerator / Denominator;
 	}
 
-	template <typename valType>
-	valType linearGradient(
-		glm::detail::tvec2<valType> const & Point0,
-		glm::detail::tvec2<valType> const & Point1,
-		glm::detail::tvec2<valType> const & Position)
+	template <typename T, precision P>
+	GLM_FUNC_QUALIFIER T linearGradient
+	(
+		tvec2<T, P> const & Point0,
+		tvec2<T, P> const & Point1,
+		tvec2<T, P> const & Position
+	)
 	{
-		glm::detail::tvec2<valType> Dist = Point1 - Point0;
+		tvec2<T, P> Dist = Point1 - Point0;
 		return (Dist.x * (Position.x - Point0.x) + Dist.y * (Position.y - Point0.y)) / glm::dot(Dist, Dist);
 	}
-
-}//namespace gradient_paint
-}//namespace gtx
 }//namespace glm

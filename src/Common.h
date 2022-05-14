@@ -3,19 +3,20 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+#define HAVE_STRUCT_TIMESPEC 1
 #include "glm/glm.hpp"
 #include "glm/gtc/type_precision.hpp"
 #include "utils/AssertStatic.h"
 #include <iostream>
 
-typedef glm::gtc::type_precision::uint32   uint;
-typedef glm::gtc::type_precision::uint8    uchar;
-typedef glm::gtc::type_precision::f32vec2  vec2;
-typedef glm::gtc::type_precision::f32vec3  vec3;
-typedef glm::gtc::type_precision::f32vec4  vec4;
-typedef glm::gtc::type_precision::f32mat3  mat3;
-typedef glm::gtc::type_precision::f32mat4  mat4;
-typedef glm::gtc::type_precision::u8vec3   Pixel;
+typedef glm::uint32   uint;
+typedef glm::uint8    uchar;
+typedef glm::f32vec2  vec2;
+typedef glm::f32vec3  vec3;
+typedef glm::f32vec4  vec4;
+typedef glm::f32mat3  mat3;
+typedef glm::f32mat4  mat4;
+typedef glm::u8vec3   Pixel;
 
 // Check the size of some common types :
 inline void __ValidateSizes__()

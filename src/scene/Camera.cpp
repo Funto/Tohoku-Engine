@@ -2,7 +2,6 @@
 
 #include "Camera.h"
 #include "../glm/gtc/matrix_transform.hpp"
-#include "../glm/gtc/matrix_projection.hpp"
 
 Camera::Camera()
 : position(), orientation(), fovy(45.0), aspect(1.0), z_near(1.0), z_far(1000.0)
@@ -68,11 +67,11 @@ float Camera::getZFar() const
 mat4 Camera::computeViewMatrix() const
 {
 	mat4 m(glm::inverse(orientation));
-	return glm::gtc::matrix_transform::translate(m, -position);
+	return glm::translate(m, -position);
 }
 
 // Projection matrix
 mat4 Camera::computeProjectionMatrix() const
 {
-	return glm::gtc::matrix_projection::perspective(fovy, aspect, z_near, z_far);
+	return glm::perspective(fovy, aspect, z_near, z_far);
 }

@@ -1,46 +1,44 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// OpenGL Mathematics Copyright (c) 2005 - 2009 G-Truc Creation (www.g-truc.net)
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Created : 2007-03-06
-// Updated : 2009-05-01
-// Licence : This source is under MIT License
-// File    : glm/gtx/polar_coordinates.hpp
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Dependency:
-// - GLM core
-///////////////////////////////////////////////////////////////////////////////////////////////////
+/// @ref gtx_polar_coordinates
+/// @file glm/gtx/polar_coordinates.hpp
+///
+/// @see core (dependence)
+///
+/// @defgroup gtx_polar_coordinates GLM_GTX_polar_coordinates
+/// @ingroup gtx
+///
+/// @brief Conversion from Euclidean space to polar space and revert.
+///
+/// <glm/gtx/polar_coordinates.hpp> need to be included to use these functionalities.
 
-#ifndef glm_gtx_polar_coordinates
-#define glm_gtx_polar_coordinates
+#pragma once
 
 // Dependency:
 #include "../glm.hpp"
 
+#if GLM_MESSAGES == GLM_MESSAGES_ENABLED && !defined(GLM_EXT_INCLUDED)
+#	pragma message("GLM: GLM_GTX_polar_coordinates extension included")
+#endif
+
 namespace glm
 {
-	namespace gtx{
-	//! GLM_GTX_polar_coordinates extension: Conversion from Euclidean space to polar space and revert.
-	namespace polar_coordinates
-	{
-		//! Convert Euclidean to Polar coordinates, x is the xz distance, y, the latitude and z the longitude.
-		//! From GLM_GTX_polar_coordinates extension.
-		template <typename T> 
-		detail::tvec3<T> polar(const detail::tvec3<T>& euclidean);
+	/// @addtogroup gtx_polar_coordinates
+	/// @{
 
-		//! Convert Polar to Euclidean coordinates.
-		//! From GLM_GTX_polar_coordinates extension.
-		template <typename T> 
-		detail::tvec3<T> euclidean(const detail::tvec3<T>& polar);
+	/// Convert Euclidean to Polar coordinates, x is the xz distance, y, the latitude and z the longitude.
+	///
+	/// @see gtx_polar_coordinates
+	template <typename T, precision P>
+	GLM_FUNC_DECL tvec3<T, P> polar(
+		tvec3<T, P> const & euclidean);
 
-	}//namespace polar_coordinates
-	}//namespace gtx
+	/// Convert Polar to Euclidean coordinates.
+	///
+	/// @see gtx_polar_coordinates
+	template <typename T, precision P>
+	GLM_FUNC_DECL tvec3<T, P> euclidean(
+		tvec2<T, P> const & polar);
+
+	/// @}
 }//namespace glm
 
-#define GLM_GTX_polar_coordinates namespace gtx::polar_coordinates
-#ifndef GLM_GTX_GLOBAL
-namespace glm {using GLM_GTX_polar_coordinates;}
-#endif//GLM_GTX_GLOBAL
-
 #include "polar_coordinates.inl"
-
-#endif//glm_gtx_polar_coordinates

@@ -8,7 +8,6 @@
 #include "../utils/XMLManip.h"
 #include "../glutil/glutil.h"
 #include "../glm/gtc/matrix_transform.hpp"
-#include "../glm/gtc/matrix_projection.hpp"
 #include <cmath>
 using namespace std;
 
@@ -90,13 +89,13 @@ bool Light::loadFromXML(const string& filename)
 mat4 Light::computeViewMatrix() const
 {
 	mat4 m(glm::inverse(getOrientation()));
-	return glm::gtc::matrix_transform::translate(m, -getPosition());
+	return glm::translate(m, -getPosition());
 }
 
 // Projection matrix
 mat4 Light::computeProjectionMatrix() const
 {
-	return glm::gtc::matrix_projection::perspective(angle, 1.0f, LIGHT_ZNEAR, LIGHT_ZFAR);
+	return glm::perspective(angle, 1.0f, LIGHT_ZNEAR, LIGHT_ZFAR);
 }
 
 // Debug drawing of the light:

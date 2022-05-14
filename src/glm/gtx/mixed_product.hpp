@@ -1,46 +1,37 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// OpenGL Mathematics Copyright (c) 2005 - 2009 G-Truc Creation (www.g-truc.net)
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Created : 2007-04-03
-// Updated : 2008-09-17
-// Licence : This source is under MIT License
-// File    : glm/gtx/mixed_product.h
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Dependency:
-// - GLM core
-///////////////////////////////////////////////////////////////////////////////////////////////////
+/// @ref gtx_mixed_product
+/// @file glm/gtx/mixed_product.hpp
+///
+/// @see core (dependence)
+///
+/// @defgroup gtx_mixed_product GLM_GTX_mixed_producte
+/// @ingroup gtx
+///
+/// @brief Mixed product of 3 vectors.
+///
+/// <glm/gtx/mixed_product.hpp> need to be included to use these functionalities.
 
-#ifndef glm_gtx_mixed_product
-#define glm_gtx_mixed_product
+#pragma once
 
 // Dependency:
 #include "../glm.hpp"
 
+#if GLM_MESSAGES == GLM_MESSAGES_ENABLED && !defined(GLM_EXT_INCLUDED)
+#	pragma message("GLM: GLM_GTX_mixed_product extension included")
+#endif
+
 namespace glm
 {
-	namespace test{
-		void main_gtx_matrix_selection();
-	}//namespace test
+	/// @addtogroup gtx_mixed_product
+	/// @{
 
-	namespace gtx{
-	//! GLM_GTX_mixed_product extension: Mixed product of 3 vectors.
-	namespace mixed_product
-	{
-		//! \brief Mixed product of 3 vectors (from GLM_GTX_mixed_product extension)
-		template <typename valType> 
-		valType mixedProduct(
-			detail::tvec3<valType> const & v1, 
-			detail::tvec3<valType> const & v2, 
-			detail::tvec3<valType> const & v3);
-	}//namespace mixed_product
-	}//namespace gtx
-}//namespace glm
+	/// @brief Mixed product of 3 vectors (from GLM_GTX_mixed_product extension)
+	template <typename T, precision P> 
+	GLM_FUNC_DECL T mixedProduct(
+		tvec3<T, P> const & v1, 
+		tvec3<T, P> const & v2, 
+		tvec3<T, P> const & v3);
 
-#define GLM_GTX_mixed_product namespace gtx::mixed_product
-#ifndef GLM_GTX_GLOBAL
-namespace glm {using GLM_GTX_mixed_product;}
-#endif//GLM_GTX_GLOBAL
+	/// @}
+}// namespace glm
 
 #include "mixed_product.inl"
-
-#endif//glm_gtx_mixed_product

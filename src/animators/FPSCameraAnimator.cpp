@@ -42,7 +42,7 @@ void FPSCameraAnimator::onMouseButtonEvent(int button, int action)
 
 	if(action == GLFW_PRESS)
 	{
-		glfwGetMousePos(&original_mouse_x, &original_mouse_y);
+		glfwGetCursorPos(GLFWWindow::getInstance()->getWindow(), &original_mouse_x, &original_mouse_y);
 		button_pressed = true;
 		original_orientation = camera->getOrientation();
 	}
@@ -66,12 +66,12 @@ void FPSCameraAnimator::update(double elapsed)
 	vec3 pos = camera->getPosition();
 
 	// Read keyboard state:
-	bool up     = (glfwGetKey(GLFW_KEY_UP     )  == GLFW_PRESS);
-	bool down   = (glfwGetKey(GLFW_KEY_DOWN   )  == GLFW_PRESS);
-	bool left   = (glfwGetKey(GLFW_KEY_LEFT   )  == GLFW_PRESS);
-	bool right  = (glfwGetKey(GLFW_KEY_RIGHT  )  == GLFW_PRESS);
-	bool pgup   = (glfwGetKey(GLFW_KEY_PAGEUP )  == GLFW_PRESS);
-	bool pgdown = (glfwGetKey(GLFW_KEY_PAGEDOWN) == GLFW_PRESS);
+	bool up     = (glfwGetKey(GLFWWindow::getInstance()->getWindow(), GLFW_KEY_UP       )  == GLFW_PRESS);
+	bool down   = (glfwGetKey(GLFWWindow::getInstance()->getWindow(), GLFW_KEY_DOWN     )  == GLFW_PRESS);
+	bool left   = (glfwGetKey(GLFWWindow::getInstance()->getWindow(), GLFW_KEY_LEFT     )  == GLFW_PRESS);
+	bool right  = (glfwGetKey(GLFWWindow::getInstance()->getWindow(), GLFW_KEY_RIGHT    )  == GLFW_PRESS);
+	bool pgup   = (glfwGetKey(GLFWWindow::getInstance()->getWindow(), GLFW_KEY_PAGE_UP  )  == GLFW_PRESS);
+	bool pgdown = (glfwGetKey(GLFWWindow::getInstance()->getWindow(), GLFW_KEY_PAGE_DOWN) == GLFW_PRESS);
 
 	// Move forward / backward
 	if(up)
@@ -103,8 +103,8 @@ void FPSCameraAnimator::update(double elapsed)
 	// Rotate according to the mouse:
 	if(button_pressed)
 	{
-		int mouse_x=0, mouse_y=0;
-		glfwGetMousePos(&mouse_x, &mouse_y);
+		double mouse_x=0, mouse_y=0;
+		glfwGetCursorPos(GLFWWindow::getInstance()->getWindow(), &mouse_x, &mouse_y);
 
 		float dx = float(original_mouse_x-mouse_x);
 		float dy = float(original_mouse_y-mouse_y);

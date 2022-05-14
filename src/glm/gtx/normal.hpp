@@ -1,48 +1,39 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// OpenGL Mathematics Copyright (c) 2005 - 2009 G-Truc Creation (www.g-truc.net)
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Created : 2005-12-21
-// Updated : 2006-11-13
-// Licence : This source is under MIT License
-// File    : glm/gtx/normal.hpp
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Dependency:
-// - GLM core
-///////////////////////////////////////////////////////////////////////////////////////////////////
+/// @ref gtx_normal
+/// @file glm/gtx/normal.hpp
+///
+/// @see core (dependence)
+/// @see gtx_extented_min_max (dependence)
+///
+/// @defgroup gtx_normal GLM_GTX_normal
+/// @ingroup gtx
+///
+/// @brief Compute the normal of a triangle.
+///
+/// <glm/gtx/normal.hpp> need to be included to use these functionalities.
 
-#ifndef glm_gtx_normal
-#define glm_gtx_normal
+#pragma once
 
 // Dependency:
 #include "../glm.hpp"
 
+#if GLM_MESSAGES == GLM_MESSAGES_ENABLED && !defined(GLM_EXT_INCLUDED)
+#	pragma message("GLM: GLM_GTX_normal extension included")
+#endif
+
 namespace glm
 {
-   	namespace test{
-		void main_gtx_normal();
-	}//namespace test
-	
-	namespace gtx{
-	//! GLM_GTX_normal extension: Compute the normal of a triangle.
-    namespace normal
-    {
-		//! Computes triangle normal from triangle points. 
-		//! From GLM_GTX_normal extension.
-        template <typename T> 
-		detail::tvec3<T> triangleNormal(
-			detail::tvec3<T> const & p1, 
-			detail::tvec3<T> const & p2, 
-			detail::tvec3<T> const & p3);
+	/// @addtogroup gtx_normal
+	/// @{
 
-    }//namespace normal
-    }//namespace gtx
+	//! Computes triangle normal from triangle points. 
+	//! From GLM_GTX_normal extension.
+	template <typename T, precision P> 
+	GLM_FUNC_DECL tvec3<T, P> triangleNormal(
+		tvec3<T, P> const & p1, 
+		tvec3<T, P> const & p2, 
+		tvec3<T, P> const & p3);
+
+	/// @}
 }//namespace glm
 
-#define GLM_GTX_normal namespace gtx::normal
-#ifndef GLM_GTX_GLOBAL
-namespace glm {using GLM_GTX_normal;}
-#endif//GLM_GTX_GLOBAL
-
 #include "normal.inl"
-
-#endif//glm_gtx_normal

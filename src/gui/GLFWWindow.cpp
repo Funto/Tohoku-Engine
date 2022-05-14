@@ -30,25 +30,28 @@ bool GLFWWindow::open(const std::string& title, uint width, uint height)
 		return false;
 	}
 
-	glfwOpenWindowHint(GLFW_OPENGL_VERSION_MAJOR,  3);
-	glfwOpenWindowHint(GLFW_OPENGL_VERSION_MINOR,  3);
-	glfwOpenWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+	glfwSetErrorCallback(&errorCallback);
 
-	if(!glfwOpenWindow(width, height, 8, 8, 8, 8, 24, 8, GLFW_WINDOW))
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR,  3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR,  3);
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+
+	window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
+	if(!window)
 	{
 		logError("cannot open the GLFW window");
 		return false;
 	}
 
+	glfwMakeContextCurrent(window);
+
 	if(!glxwInit())
 		return false;
 
-	glfwSetWindowTitle(title.c_str());
-
-	glfwSetMouseButtonCallback(&mouseButtonCallback);
-	glfwSetMousePosCallback(&mousePosCallback);
-	glfwSetMouseWheelCallback(&mouseWheelCallback);
-	glfwSetKeyCallback(&keyCallback);
+	glfwSetMouseButtonCallback(window, &mouseButtonCallback);
+	glfwSetCursorPosCallback(window, &cursorPosCallback);
+	glfwSetScrollCallback(window, &scrollCallback);
+	glfwSetKeyCallback(window, &keyCallback);
 
 	this->opened = true;
 
@@ -60,7 +63,7 @@ void GLFWWindow::close()
 	if(!opened)
 		return;
 
-	glfwCloseWindow();
+	glfwDestroyWindow(window);
 	glfwTerminate();
 	opened = false;
 }
@@ -70,11 +73,12 @@ void GLFWWindow::swapBuffers()
 	if(!opened)
 		return;
 
-	glfwSwapBuffers();
+	glfwSwapBuffers(window);
+	glfwPollEvents();
 
 	GL_CHECK();
 
-	if(glfwGetKey(GLFW_KEY_ESC) || !glfwGetWindowParam(GLFW_OPENED))
+	if(glfwGetKey(window, GLFW_KEY_ESCAPE) || glfwWindowShouldClose(window))
 		close();
 }
 
@@ -88,7 +92,12 @@ void GLFWWindow::enableVSync(bool enable)
 
 // Callback wrappers:
 // ---------------------------------------------------------------------
-void GLFWCALL GLFWWindow::mouseButtonCallback(int button, int action)
+void GLFWWindow::errorCallback(int error, const char* description)
+{
+	logError("GLFW error: ", description);
+}
+
+void GLFWWindow::mouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 {
 	EventReceiverList& event_receivers = GLFWWindow::getInstance()->event_receivers;
 
@@ -101,7 +110,7 @@ void GLFWCALL GLFWWindow::mouseButtonCallback(int button, int action)
 	}
 }
 
-void GLFWCALL GLFWWindow::mousePosCallback(int x, int y)
+void GLFWWindow::cursorPosCallback(GLFWwindow* window, double xpos, double ypos)
 {
 	EventReceiverList& event_receivers = GLFWWindow::getInstance()->event_receivers;
 
@@ -110,11 +119,11 @@ void GLFWCALL GLFWWindow::mousePosCallback(int x, int y)
 		it++)
 	{
 		EventReceiver* event_receiver = (*it);
-		event_receiver->onMousePosEvent(x, y);
+		event_receiver->onMousePosEvent(xpos, ypos);
 	}
 }
 
-void GLFWCALL GLFWWindow::mouseWheelCallback(int pos)
+void GLFWWindow::scrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 {
 	EventReceiverList& event_receivers = GLFWWindow::getInstance()->event_receivers;
 
@@ -123,11 +132,11 @@ void GLFWCALL GLFWWindow::mouseWheelCallback(int pos)
 		it++)
 	{
 		EventReceiver* event_receiver = (*it);
-		event_receiver->onMouseWheelEvent(pos);
+		event_receiver->onMouseWheelEvent(yoffset);
 	}
 }
 
-void GLFWCALL GLFWWindow::keyCallback(int key, int action)
+void GLFWWindow::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	EventReceiverList& event_receivers = GLFWWindow::getInstance()->event_receivers;
 

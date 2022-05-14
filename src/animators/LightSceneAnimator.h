@@ -17,8 +17,8 @@ private:
 
 	bool mouse_right_pressed;
 	vec3 light_pos_before_drag;
-	int original_mouse_x;
-	int original_mouse_y;
+	double original_mouse_x;
+	double original_mouse_y;
 
 	bool depth_mode;
 

@@ -1,7 +1,8 @@
 // glutil.cpp
 
 #include "glutil.h"
-#include <GL/glfw.h>
+#include <GLFW/glfw3.h>
+#include "../gui/GLFWWindow.h"
 #include "../log/Log.h"
 
 #include <iostream>
@@ -299,7 +300,7 @@ bool loadShaderSource(GLuint id_shader, const char* file_path)
 
 	// Get the file size
 	f.seekg(0, ios::end);
-	filesize = f.tellg();
+	filesize = (int)f.tellg();
 
 	// Allocate memory for the text and get the file's contents
 	buf = new GLchar[filesize+1];
@@ -476,7 +477,7 @@ void displayTextureRect(GLuint id_texture, unsigned pos_x, unsigned pos_y,
 		GLfloat win_aspect = 0.0f;
 		{
 			int win_w=0, win_h=0;
-			glfwGetWindowSize(&win_w, &win_h);
+			glfwGetFramebufferSize(GLFWWindow::getInstance()->getWindow(), &win_w, &win_h);
 			win_h = (win_h <= 0 ? 1 : win_h);
 			win_aspect = GLfloat(win_w) / GLfloat(win_h);
 		}
@@ -494,7 +495,7 @@ void displayTextureRect(GLuint id_texture, unsigned pos_x, unsigned pos_y,
 	{
 		// Get the window's size:
 		int win_w=0, win_h=0;
-		glfwGetWindowSize(&win_w, &win_h);
+		glfwGetFramebufferSize(GLFWWindow::getInstance()->getWindow(), &win_w, &win_h);
 		win_h = (win_h <= 0 ? 1 : win_h);
 
 		w = 2.0f * tex_width  / GLfloat(win_w);

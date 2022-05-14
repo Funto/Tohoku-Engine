@@ -1,141 +1,65 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// OpenGL Mathematics Copyright (c) 2005 - 2009 G-Truc Creation (www.g-truc.net)
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Created : 2007-03-16
-// Updated : 2008-10-24
-// Licence : This source is under MIT License
-// File    : glm/gtx/compatibility.inl
-///////////////////////////////////////////////////////////////////////////////////////////////////
+/// @ref gtx_compatibility
+/// @file glm/gtx/compatibility.inl
 
-namespace glm{
-namespace gtx{
-namespace compatibility{
+#include <limits>
 
-// isfinite
-template <typename genType> 
-inline bool isfinite(
-	genType const & x)
+namespace glm
 {
-#ifdef GLM_COMPILER_VC
-	return _finite(x);
-#else//GLM_COMPILER_GCC
-	return std::isfinite(x);
-#endif
-}
+	// isfinite
+	template <typename genType>
+	GLM_FUNC_QUALIFIER bool isfinite(
+		genType const & x)
+	{
+#		if GLM_HAS_CXX11_STL
+			return std::isfinite(x) != 0;
+#		elif GLM_COMPILER & GLM_COMPILER_VC
+			return _finite(x);
+#		elif GLM_COMPILER & GLM_COMPILER_GCC && GLM_PLATFORM & GLM_PLATFORM_ANDROID
+			return _isfinite(x) != 0;
+#		else
+			if (std::numeric_limits<genType>::is_integer || std::denorm_absent == std::numeric_limits<genType>::has_denorm)
+				return std::numeric_limits<genType>::min() <= x && std::numeric_limits<genType>::max() >= x;
+			else
+				return -std::numeric_limits<genType>::max() <= x && std::numeric_limits<genType>::max() >= x;
+#		endif
+	}
 
-template <typename valType> 
-inline detail::tvec2<bool> isfinite(
-	detail::tvec2<valType> const & x)
-{
-	return detail::tvec2<bool>(
-		isfinite(x.x),
-		isfinite(x.y));
-}
+	template <typename T, precision P>
+	GLM_FUNC_QUALIFIER tvec1<bool, P> isfinite(
+		tvec1<T, P> const & x)
+	{
+		return tvec1<bool, P>(
+			isfinite(x.x));
+	}
 
-template <typename valType> 
-inline detail::tvec3<bool> isfinite(
-	detail::tvec3<valType> const & x)
-{
-	return detail::tvec3<bool>(
-		isfinite(x.x),
-		isfinite(x.y),
-		isfinite(x.z));
-}
+	template <typename T, precision P>
+	GLM_FUNC_QUALIFIER tvec2<bool, P> isfinite(
+		tvec2<T, P> const & x)
+	{
+		return tvec2<bool, P>(
+			isfinite(x.x),
+			isfinite(x.y));
+	}
 
-template <typename valType> 
-inline detail::tvec4<bool> isfinite(
-	detail::tvec4<valType> const & x)
-{
-	return detail::tvec4<bool>(
-		isfinite(x.x),
-		isfinite(x.y),
-		isfinite(x.z),
-		isfinite(x.w));
-}
+	template <typename T, precision P>
+	GLM_FUNC_QUALIFIER tvec3<bool, P> isfinite(
+		tvec3<T, P> const & x)
+	{
+		return tvec3<bool, P>(
+			isfinite(x.x),
+			isfinite(x.y),
+			isfinite(x.z));
+	}
 
-// isinf
-template <typename genType> 
-inline bool isinf(
-	genType const & x)
-{
-#if(defined(GLM_COMPILER) && (GLM_COMPILER & GLM_COMPILER_VC))
-	return _fpclass(x) == _FPCLASS_NINF || _fpclass(x) == _FPCLASS_PINF;
-#else
-	return std::isinf(x);
-#endif
-}
+	template <typename T, precision P>
+	GLM_FUNC_QUALIFIER tvec4<bool, P> isfinite(
+		tvec4<T, P> const & x)
+	{
+		return tvec4<bool, P>(
+			isfinite(x.x),
+			isfinite(x.y),
+			isfinite(x.z),
+			isfinite(x.w));
+	}
 
-template <typename valType> 
-inline detail::tvec2<bool> isinf(
-	detail::tvec2<valType> const & x)
-{
-	return detail::tvec2<bool>(
-		isinf(x.x),
-		isinf(x.y));
-}
-
-template <typename valType> 
-inline detail::tvec3<bool> isinf(
-	detail::tvec3<valType> const & x)
-{
-	return detail::tvec3<bool>(
-		isinf(x.x),
-		isinf(x.y),
-		isinf(x.z));
-}
-
-template <typename valType> 
-inline detail::tvec4<bool> isinf(
-	detail::tvec4<valType> const & x)
-{
-	return detail::tvec4<bool>(
-		isinf(x.x),
-		isinf(x.y),
-		isinf(x.z),
-		isinf(x.w));
-}
-
-// isnan
-template <typename genType> 
-inline bool isnan(genType const & x)
-{
-#if(defined(GLM_COMPILER) && (GLM_COMPILER & GLM_COMPILER_VC))
-	return _isnan(x);
-#else
-	return std::isnan(x);
-#endif
-}
-
-template <typename valType> 
-inline detail::tvec2<bool> isnan(
-	detail::tvec2<valType> const & x)
-{
-	return detail::tvec2<bool>(
-		isnan(x.x),
-		isnan(x.y));
-}
-
-template <typename valType> 
-inline detail::tvec3<bool> isnan(
-	detail::tvec3<valType> const & x)
-{
-	return detail::tvec3<bool>(
-		isnan(x.x),
-		isnan(x.y),
-		isnan(x.z));
-}
-
-template <typename valType> 
-inline detail::tvec4<bool> isnan(
-	detail::tvec4<valType> const & x)
-{
-	return detail::tvec4<bool>(
-		isnan(x.x),
-		isnan(x.y),
-		isnan(x.z),
-		isnan(x.w));
-}
-
-}//namespace compatibility
-}//namespace gtx
 }//namespace glm

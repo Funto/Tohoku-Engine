@@ -1,68 +1,60 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// OpenGL Mathematics Copyright (c) 2005 - 2009 G-Truc Creation (www.g-truc.net)
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Created : 2005-12-30
-// Updated : 2006-11-13
-// Licence : This source is under MIT License
-// File    : glm/gtx/vector_angle.h
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Dependency:
-// - GLM core
-// - GLM_GTX_quaternion
-// - GLM_GTX_epsilon
-///////////////////////////////////////////////////////////////////////////////////////////////////
+/// @ref gtx_vector_angle
+/// @file glm/gtx/vector_angle.hpp
+///
+/// @see core (dependence)
+/// @see gtx_quaternion (dependence)
+/// @see gtx_epsilon (dependence)
+///
+/// @defgroup gtx_vector_angle GLM_GTX_vector_angle
+/// @ingroup gtx
+///
+/// @brief Compute angle between vectors
+///
+/// <glm/gtx/vector_angle.hpp> need to be included to use these functionalities.
 
-#ifndef glm_gtx_vector_angle
-#define glm_gtx_vector_angle
+#pragma once
 
 // Dependency:
 #include "../glm.hpp"
+#include "../gtc/epsilon.hpp"
 #include "../gtx/quaternion.hpp"
-#include "../gtx/epsilon.hpp"
+#include "../gtx/rotate_vector.hpp"
+
+#if GLM_MESSAGES == GLM_MESSAGES_ENABLED && !defined(GLM_EXT_INCLUDED)
+#	pragma message("GLM: GLM_GTX_vector_angle extension included")
+#endif
 
 namespace glm
 {
-	namespace test{
-		void main_gtx_vector_angle();
-	}//namespace test
+	/// @addtogroup gtx_vector_angle
+	/// @{
 
-    namespace gtx{
-	//! GLM_GTX_vector_angle extension: Compute angle between vectors
-    namespace vector_angle
-    {
-		//! Returns the absolute angle between x and y.
-		//! Parameters need to be normalized.
-		//! From GLM_GTX_vector_angle extension
-		template <typename vecType> 
-		typename vecType::value_type angle(
-			vecType const & x, 
-			vecType const & y);
+	//! Returns the absolute angle between two vectors.
+	//! Parameters need to be normalized.
+	/// @see gtx_vector_angle extension.
+	template <typename vecType>
+	GLM_FUNC_DECL typename vecType::value_type angle(
+		vecType const & x, 
+		vecType const & y);
 
-		//! Returns the oriented angle between x and y 
-		//! Parameters need to be normalized.
-		//! From GLM_GTX_vector_angle extension.
-		template <typename vecType> 
-		typename vecType::value_type orientedAngle(
-			vecType const & x, 
-			vecType const & y);
+	//! Returns the oriented angle between two 2d vectors.
+	//! Parameters need to be normalized.
+	/// @see gtx_vector_angle extension.
+	template <typename T, precision P>
+	GLM_FUNC_DECL T orientedAngle(
+		tvec2<T, P> const & x,
+		tvec2<T, P> const & y);
 
-		//! Returns the orientation of a two vector base from a normal.
-		//! Parameters need to be normalized.
-		//! From GLM_GTX_vector_angle extension.
-		template <typename vecType>
-		typename vecType::value_type orientedAngleFromRef(
-			vecType const & x,
-			vecType const & y,
-			detail::tvec3<typename vecType::value_type> const & ref);
-    }//namespace vector_angle
-    }//namespace gtx
-}//namespace glm
+	//! Returns the oriented angle between two 3d vectors based from a reference axis.
+	//! Parameters need to be normalized.
+	/// @see gtx_vector_angle extension.
+	template <typename T, precision P>
+	GLM_FUNC_DECL T orientedAngle(
+		tvec3<T, P> const & x,
+		tvec3<T, P> const & y,
+		tvec3<T, P> const & ref);
 
-#define GLM_GTX_vector_angle namespace gtx::quaternion; using namespace gtx::epsilon; using namespace gtx::vector_angle
-#ifndef GLM_GTX_GLOBAL
-namespace glm {using GLM_GTX_vector_angle;}
-#endif//GLM_GTX_GLOBAL
+	/// @}
+}// namespace glm
 
 #include "vector_angle.inl"
-
-#endif//glm_gtx_vector_angle

@@ -30,12 +30,12 @@ void KeyboardCameraAnimator::update(double elapsed)
 	vec3 dir = -camera->getOrientation()[2];
 	vec3 pos = camera->getPosition();
 
-	bool up     = (glfwGetKey(GLFW_KEY_UP     )  == GLFW_PRESS);
-	bool down   = (glfwGetKey(GLFW_KEY_DOWN   )  == GLFW_PRESS);
-	bool left   = (glfwGetKey(GLFW_KEY_LEFT   )  == GLFW_PRESS);
-	bool right  = (glfwGetKey(GLFW_KEY_RIGHT  )  == GLFW_PRESS);
-	bool pgup   = (glfwGetKey(GLFW_KEY_PAGEUP )  == GLFW_PRESS);
-	bool pgdown = (glfwGetKey(GLFW_KEY_PAGEDOWN) == GLFW_PRESS);
+	bool up     = (glfwGetKey(GLFWWindow::getInstance()->getWindow(), GLFW_KEY_UP       )  == GLFW_PRESS);
+	bool down   = (glfwGetKey(GLFWWindow::getInstance()->getWindow(), GLFW_KEY_DOWN     )  == GLFW_PRESS);
+	bool left   = (glfwGetKey(GLFWWindow::getInstance()->getWindow(), GLFW_KEY_LEFT     )  == GLFW_PRESS);
+	bool right  = (glfwGetKey(GLFWWindow::getInstance()->getWindow(), GLFW_KEY_RIGHT    )  == GLFW_PRESS);
+	bool pgup   = (glfwGetKey(GLFWWindow::getInstance()->getWindow(), GLFW_KEY_PAGE_UP  )  == GLFW_PRESS);
+	bool pgdown = (glfwGetKey(GLFWWindow::getInstance()->getWindow(), GLFW_KEY_PAGE_DOWN) == GLFW_PRESS);
 
 	if(up)
 		camera->setPosition(pos + dir*dt*MOVING_SPEED);

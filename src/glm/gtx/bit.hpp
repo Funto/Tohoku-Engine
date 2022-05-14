@@ -1,106 +1,95 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// OpenGL Mathematics Copyright (c) 2005 - 2009 G-Truc Creation (www.g-truc.net)
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Created : 2007-03-14
-// Updated : 2008-11-14
-// Licence : This source is under MIT License
-// File    : glm/gtx/bit.h
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Dependency:
-// - GLM core
-// - GLM_GTC_half_float
-///////////////////////////////////////////////////////////////////////////////////////////////////
+/// @ref gtx_bit
+/// @file glm/gtx/bit.hpp
+///
+/// @see core (dependence)
+/// @see gtc_half_float (dependence)
+///
+/// @defgroup gtx_bit GLM_GTX_bit
+/// @ingroup gtx
+/// 
+/// @brief Allow to perform bit operations on integer values
+/// 
+/// <glm/gtx/bit.hpp> need to be included to use these functionalities.
 
-#ifndef glm_gtx_bit
-#define glm_gtx_bit
+#pragma once
 
-// Dependency:
-#include "../glm.hpp"
-#include "../gtc/half_float.hpp"
-#include <limits>
+// Dependencies
+#include "../gtc/bitfield.hpp"
+
+#if GLM_MESSAGES == GLM_MESSAGES_ENABLED && !defined(GLM_EXT_INCLUDED)
+#	pragma message("GLM: GLM_GTX_bit extension is deprecated, include GLM_GTC_bitfield and GLM_GTC_integer instead")
+#endif
 
 namespace glm
 {
-	namespace test{
-		void main_gtx_bit();
-	}//namespace test
+	/// @addtogroup gtx_bit
+	/// @{
 
-	namespace gtx{
-	//! GLM_GTX_bit extension: Allow to perform bit operations on integer values
-	namespace bit
-	{
-		using namespace gtc::half_float;
+	/// @see gtx_bit
+	template <typename genIUType>
+	GLM_FUNC_DECL genIUType highestBitValue(genIUType Value);
 
-		//! Build a mask of 'count' bits
-		//! From GLM_GTX_bit extension.
-		template <typename genIType>
-		genIType mask(genIType const & count);
+	/// @see gtx_bit
+	template <typename genIUType>
+	GLM_FUNC_DECL genIUType lowestBitValue(genIUType Value);
 
-		//! Component wise extraction of bit fields.
-		//! genType and genIType could be a scalar or a vector.
-		//! From GLM_GTX_bit extension.
-		template <typename genType, typename genIType>
-		genIType extractField(genType const & v, genIType const & first, genIType const & count);
+	/// Find the highest bit set to 1 in a integer variable and return its value.
+	///
+	/// @see gtx_bit
+	template <typename T, precision P, template <typename, precision> class vecType>
+	GLM_FUNC_DECL vecType<T, P> highestBitValue(vecType<T, P> const & value);
 
-		//! Find the lowest bit set to 1 in a integer variable.
-		//! From GLM_GTX_bit extension.
-		template <typename genType> 
-		int lowestBit(genType const & value);
+	/// Return the power of two number which value is just higher the input value.
+	/// Deprecated, use ceilPowerOfTwo from GTC_round instead
+	///
+	/// @see gtc_round
+	/// @see gtx_bit
+	template <typename genIUType>
+	GLM_DEPRECATED GLM_FUNC_DECL genIUType powerOfTwoAbove(genIUType Value);
 
-		//! Find the highest bit set to 1 in a integer variable.
-		//! From GLM_GTX_bit extension.
-		template <typename genType> 
-		int highestBit(genType const & value);
+	/// Return the power of two number which value is just higher the input value.
+	/// Deprecated, use ceilPowerOfTwo from GTC_round instead
+	///
+	/// @see gtc_round
+	/// @see gtx_bit
+	template <typename T, precision P, template <typename, precision> class vecType>
+	GLM_DEPRECATED GLM_FUNC_DECL vecType<T, P> powerOfTwoAbove(vecType<T, P> const & value);
 
-		//! Find the highest bit set to 1 in a integer variable and return its value. 
-		//! From GLM_GTX_bit extension.
-		template <typename genType> 
-		genType highestBitValue(genType const & value);
+	/// Return the power of two number which value is just lower the input value.
+	/// Deprecated, use floorPowerOfTwo from GTC_round instead
+	///
+	/// @see gtc_round
+	/// @see gtx_bit
+	template <typename genIUType>
+	GLM_DEPRECATED GLM_FUNC_DECL genIUType powerOfTwoBelow(genIUType Value);
 
-		//! Return true if the value is a power of two number. 
-		//! From GLM_GTX_bit extension. 
-		template <typename genType> 
-		bool isPowerOfTwo(genType const & value);
+	/// Return the power of two number which value is just lower the input value.
+	/// Deprecated, use floorPowerOfTwo from GTC_round instead
+	///
+	/// @see gtc_round
+	/// @see gtx_bit
+	template <typename T, precision P, template <typename, precision> class vecType>
+	GLM_DEPRECATED GLM_FUNC_DECL vecType<T, P> powerOfTwoBelow(vecType<T, P> const & value);
 
-		//! Return the power of two number which value is just higher the input value.
-		//! From GLM_GTX_bit extension.
-		template <typename genType> 
-		genType powerOfTwoAbove(genType const & value);
+	/// Return the power of two number which value is the closet to the input value.
+	/// Deprecated, use roundPowerOfTwo from GTC_round instead
+	///
+	/// @see gtc_round
+	/// @see gtx_bit
+	template <typename genIUType>
+	GLM_DEPRECATED GLM_FUNC_DECL genIUType powerOfTwoNearest(genIUType Value);
 
-		//! Return the power of two number which value is just lower the input value. 
-		//! From GLM_GTX_bit extension.
-		template <typename genType> 
-		genType powerOfTwoBelow(genType const & value);
+	/// Return the power of two number which value is the closet to the input value.
+	/// Deprecated, use roundPowerOfTwo from GTC_round instead
+	///
+	/// @see gtc_round
+	/// @see gtx_bit
+	template <typename T, precision P, template <typename, precision> class vecType>
+	GLM_DEPRECATED GLM_FUNC_DECL vecType<T, P> powerOfTwoNearest(vecType<T, P> const & value);
 
-		//! Return the power of two number which value is the closet to the input value. 
-		//! From GLM_GTX_bit extension.
-		template <typename genType> 
-		genType powerOfTwoNearest(genType const & value);
+	/// @}
+} //namespace glm
 
-		//! Revert all bits of any integer based type. 
-		//! From GLM_GTX_bit extension.
-		template <typename genType> 
-		genType bitRevert(genType const & value);
-
-		//! Rotate all bits to the right.
-		//! From GLM_GTX_bit extension.
-		template <typename genType>
-		genType bitRotateRight(genType const & In, std::size_t Shift);
-
-		//! Rotate all bits to the left.
-		//! From GLM_GTX_bit extension.
-		template <typename genType>
-		genType bitRotateLeft(genType const & In, std::size_t Shift);
-
-	}//namespace bit
-	}//namespace gtx
-}//namespace glm
-
-#define GLM_GTX_bit namespace gtx::bit
-#ifndef GLM_GTX_GLOBAL
-namespace glm {using GLM_GTX_bit;}
-#endif//GLM_GTX_GLOBAL
 
 #include "bit.inl"
 
-#endif//glm_gtx_bit

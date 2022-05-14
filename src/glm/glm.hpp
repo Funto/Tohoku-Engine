@@ -1,173 +1,88 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// OpenGL Mathematics Copyright (c) 2005 - 2008 G-Truc Creation (www.g-truc.net)
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Created : 2005-01-14
-// Updated : 2009-05-01
-// Licence : This source is under MIT License
-// File    : glm/glm.hpp
-///////////////////////////////////////////////////////////////////////////////////////////////////
+/// @ref core
+/// @file glm/glm.hpp
+///
+/// @defgroup core GLM Core
+///
+/// @brief The core of GLM, which implements exactly and only the GLSL specification to the degree possible.
+///
+/// The GLM core consists of @ref core_types "C++ types that mirror GLSL types" and
+/// C++ functions that mirror the GLSL functions. It also includes 
+/// @ref core_precision "a set of precision-based types" that can be used in the appropriate
+/// functions. The C++ types are all based on a basic set of @ref core_template "template types".
+///
+/// The best documentation for GLM Core is the current GLSL specification,
+/// <a href="http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.clean.pdf">version 4.2
+/// (pdf file)</a>.
+///
+/// GLM core functionnalities require <glm/glm.hpp> to be included to be used.
+///
+/// @defgroup core_types Types
+///
+/// @brief The standard types defined by the specification.
+///
+/// These types are all typedefs of more generalized, template types. To see the definition
+/// of these template types, go to @ref core_template.
+///
+/// @ingroup core
+///
+/// @defgroup core_precision Precision types
+///
+/// @brief Non-GLSL types that are used to define precision-based types.
+///
+/// The GLSL language allows the user to define the precision of a particular variable.
+/// In OpenGL's GLSL, these precision qualifiers have no effect; they are there for compatibility
+/// with OpenGL ES's precision qualifiers, where they @em do have an effect.
+///
+/// C++ has no language equivalent to precision qualifiers. So GLM provides the next-best thing:
+/// a number of typedefs of the @ref core_template that use a particular precision.
+///
+/// None of these types make any guarantees about the actual precision used.
+///
+/// @ingroup core
+///
+/// @defgroup core_template Template types
+///
+/// @brief The generic template types used as the basis for the core types. 
+///
+/// These types are all templates used to define the actual @ref core_types.
+/// These templetes are implementation details of GLM types and should not be used explicitly.
+///
+/// @ingroup core
 
-/*! \mainpage OpenGL Mathematics
- *
- * OpenGL Mathematics (GLM) is a C++ mathematics library for 3D applications based on the OpenGL Shading Language (GLSL) specification. 
- *
- * The goal of the project is to provide to 3D programmers math classes and functions that miss in C++ when we use to program with GLSL or any high level GPU language. With GLM, the idea is to have a library that works the same way that GLSL which imply a strict following of GLSL specification for the implementation.
- *
- * However, this project isn't limited by GLSL features. An extension system based on GLSL extensions development conventions allows to extend GLSL capabilities.
- *
- * GLM is release under MIT license and available for all version of GCC from version 3.4 and Visual Studio from version 8.0 as a platform independent library.
- *
- * Any feedback is welcome, please send them to g.truc.creation[NO_SPAM_THANKS]gmail.com.
- *
- */
+#include "detail/_fixes.hpp"
 
-#ifndef glm_glm
-#define glm_glm
-
-#ifdef max
-#undef max
-#endif
-
-#ifdef min
-#undef min
-#endif
-
-#define GLMvalType typename genType::value_type
-#define GLMcolType typename genType::col_type
-#define GLMrowType typename genType::row_type
-
-#define GLMsizeType typename genType::size_type
-#define GLMrowSize typename genType::row_size
-#define GLMcolSize typename genType::col_size
+#pragma once
 
 #include <cmath>
 #include <climits>
-#include "./setup.hpp"
+#include <cfloat>
+#include <limits>
+#include <cassert>
+#include "fwd.hpp"
 
-//! GLM namespace, it contains all GLSL based features.
-namespace glm
-{
-	namespace test
-	{
-		bool main_bug();
-		bool main_core();
-	}//namespace test
+#if GLM_MESSAGES == GLM_MESSAGES_ENABLED && !defined(GLM_MESSAGE_CORE_INCLUDED_DISPLAYED)
+#	define GLM_MESSAGE_CORE_INCLUDED_DISPLAYED
+#	pragma message("GLM: Core library included")
+#endif//GLM_MESSAGES
 
-	//! GLM core. Namespace that includes all the feature define by GLSL 1.30.8 specification. This namespace is included in glm namespace.
-	namespace core
-	{
-		//! Scalar, vectors and matrices 
-		//! from section 4.1.2 Booleans, 4.1.3 Integers section, 4.1.4 Floats section,
-		//! 4.1.5 Vectors and section 4.1.6 Matrices of GLSL 1.30.8 specification. 
-		//! This namespace resolves precision qualifier define in section 4.5 of GLSL 1.30.8 specification.
-		namespace type
-		{
-			//! Scalar types from section 4.1.2 Booleans, 4.1.3 Integers and 4.1.4 Floats of GLSL 1.30.8 specification. 
-			//! This namespace is included in glm namespace.
-			namespace scalar
-			{
-				//! Scalar types with precision qualifier.
-				//! This namespace is included in glm namespace.
-				namespace precision{}
-			}
+#include "vec2.hpp"
+#include "vec3.hpp"
+#include "vec4.hpp"
+#include "mat2x2.hpp"
+#include "mat2x3.hpp"
+#include "mat2x4.hpp"
+#include "mat3x2.hpp"
+#include "mat3x3.hpp"
+#include "mat3x4.hpp"
+#include "mat4x2.hpp"
+#include "mat4x3.hpp"
+#include "mat4x4.hpp"
 
-			//! Vector types from section 4.1.5 of GLSL 1.30.8 specification. 
-			//! This namespace is included in glm namespace.
-			namespace vector
-			{
-				//! Vector types with precision qualifier.
-				//! This namespace is included in glm namespace.
-				namespace precision{}
-			}
-			
-			//! Matrix types from section 4.1.6 of GLSL 1.30.8 specification. 
-			//! This namespace is included in glm namespace.
-			namespace matrix
-			{
-				//! Matrix types with precision qualifier.
-				//! This namespace is included in glm namespace.
-				namespace precision{}
-			}
-		}
-		//! Some of the functions defined in section 8 Built-in Functions of GLSL 1.30.8 specification.
-		//! Angle and trigonometry, exponential, common, geometric, matrix and vector relational functions.
-		namespace function{}
-	}
-	//namespace core
-
-	using namespace core::type::scalar;
-	using namespace core::type::scalar::precision;
-	using namespace core::type::vector;
-	using namespace core::type::vector::precision;
-	using namespace core::type::matrix;
-	using namespace core::type::matrix::precision;
-
-	//! GLM experimental extensions. The interface could change between releases.
-	namespace gtx{}
-
-	//! GLM stable extensions.
-	namespace gtc{}
-
-	//! IMG extensions.
-	namespace img{}
-
-	//! VIRTREV extensions.
-	namespace img{}
-
-} //namespace glm
-
-#include "./core/_detail.hpp"
-#include "./core/type.hpp"
-#include "./core/type_half.hpp"
-
-#include "./core/func_common.hpp"
-#include "./core/func_exponential.hpp"
-#include "./core/func_geometric.hpp"
-#include "./core/func_matrix.hpp"
-#include "./core/func_trigonometric.hpp"
-#include "./core/func_vector_relational.hpp"
-#include "./core/func_noise.hpp"
-#include "./core/_swizzle.hpp"
-//#include "./core/_xref2.hpp"
-//#include "./core/_xref3.hpp"
-//#include "./core/_xref4.hpp"
-
-#if(defined(GLM_MESSAGE) && (GLM_MESSAGE & (GLM_MESSAGE_CORE | GLM_MESSAGE_NOTIFICATION)))
-#	pragma message("GLM message: Core library included")
-#endif//GLM_MESSAGE
-
-#if(defined(GLM_COMPILER) && (GLM_COMPILER & GLM_COMPILER_VC))
-
-#define GLM_DEPRECATED __declspec(deprecated)
-#define GLM_RESTRICT __restrict
-#define GLM_ALIGN(x) __declspec(align(x))
-
-//#define aligned(x) __declspec(align(x)) struct
-
-#else
-
-#define GLM_DEPRECATED
-#define GLM_RESTRICT
-#define GLM_ALIGN(x)
-
-#endif//GLM_COMPILER
-
-////////////////////
-// check type sizes
-#ifndef GLM_STATIC_ASSERT_NULL
-	GLM_STATIC_ASSERT(sizeof(glm::detail::int8)==1);
-	GLM_STATIC_ASSERT(sizeof(glm::detail::int16)==2);
-	GLM_STATIC_ASSERT(sizeof(glm::detail::int32)==4);
-	GLM_STATIC_ASSERT(sizeof(glm::detail::int64)==8);
-
-	GLM_STATIC_ASSERT(sizeof(glm::detail::uint8)==1);
-	GLM_STATIC_ASSERT(sizeof(glm::detail::uint16)==2);
-	GLM_STATIC_ASSERT(sizeof(glm::detail::uint32)==4);
-	GLM_STATIC_ASSERT(sizeof(glm::detail::uint64)==8);
-
-	GLM_STATIC_ASSERT(sizeof(glm::detail::float16)==2);
-	GLM_STATIC_ASSERT(sizeof(glm::detail::float32)==4);
-	GLM_STATIC_ASSERT(sizeof(glm::detail::float64)==8);
-#endif//GLM_STATIC_ASSERT_NULL
-
-#endif //glm_glm
+#include "trigonometric.hpp"
+#include "exponential.hpp"
+#include "common.hpp"
+#include "packing.hpp"
+#include "geometric.hpp"
+#include "matrix.hpp"
+#include "vector_relational.hpp"
+#include "integer.hpp"

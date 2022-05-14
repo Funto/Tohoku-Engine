@@ -5,7 +5,7 @@
 
 #include "../Common.h"
 #include "../glutil/glxw.h"
-#include <GL/glfw.h>
+#include <GLFW/glfw3.h>
 #include <string>
 #include <list>
 
@@ -18,14 +18,16 @@ private:
 	uint width;
 	uint height;
 	bool opened;
+	GLFWwindow* window;
 
 	typedef std::list<EventReceiver*> EventReceiverList;
 	EventReceiverList event_receivers;
 
-	static void GLFWCALL mouseButtonCallback(int button, int action);
-	static void GLFWCALL mousePosCallback(int x, int y);
-	static void GLFWCALL mouseWheelCallback(int pos);
-	static void GLFWCALL keyCallback(int key, int action);
+	static void errorCallback(int error, const char* description);
+	static void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
+	static void cursorPosCallback(GLFWwindow* window, double xpos, double ypos);
+	static void scrollCallback(GLFWwindow* window, double xoffset, double yoffset);
+	static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
 private:
 	GLFWWindow();
@@ -38,6 +40,8 @@ public:
 	void swapBuffers();
 
 	void enableVSync(bool enable=true);
+
+	GLFWwindow* getWindow() const {return window;}
 
 	const std::string& getTitle() const {return title;}
 	uint getWidth() const {return width;}

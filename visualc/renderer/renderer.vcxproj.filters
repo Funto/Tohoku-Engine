@@ -37,6 +37,12 @@
     <Filter Include="shaders">
       <UniqueIdentifier>{357726dc-eb2f-492b-8bf8-241822133058}</UniqueIdentifier>
     </Filter>
+    <Filter Include="clutil">
+      <UniqueIdentifier>{21f80733-3fb9-42c1-be33-4b782c38fd80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="glew">
+      <UniqueIdentifier>{217d4952-4d7e-4eab-a1a9-251973ad2d5b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\animators\CameraAnimator.cpp">
@@ -220,6 +226,24 @@
     </ClCompile>
     <ClCompile Include="..\..\src\glutil\TextureCreation.cpp">
       <Filter>glutil</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\renderer\MyRenderer2.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\renderer\utils\MinMaxMipmaps.cpp">
+      <Filter>renderer\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\renderer\utils\OCLRaytracer.cpp">
+      <Filter>renderer\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\renderer\utils\PhotonsMap.cpp">
+      <Filter>renderer\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\clutil\clutil.cpp">
+      <Filter>clutil</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\glew-2.1.0\src\glew.c">
+      <Filter>glew</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -439,6 +463,21 @@
     </ClInclude>
     <ClInclude Include="..\..\src\glutil\TextureCreation.h">
       <Filter>glutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\renderer\MyRenderer2.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\renderer\utils\MinMaxMipmaps.h">
+      <Filter>renderer\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\renderer\utils\OCLRaytracer.h">
+      <Filter>renderer\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\renderer\utils\PhotonsMap.h">
+      <Filter>renderer\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\clutil\clutil.h">
+      <Filter>clutil</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

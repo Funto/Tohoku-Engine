@@ -101,8 +101,8 @@ void LightSceneAnimator::update(double elapsed)
 	// Translation:
 	if(mouse_right_pressed)
 	{
-		int mouse_x=0, mouse_y=0;
-		glfwGetMousePos(&mouse_x, &mouse_y);
+		double mouse_x=0, mouse_y=0;
+		glfwGetCursorPos(GLFWWindow::getInstance()->getWindow(), &mouse_x, &mouse_y);
 
 		float dx = +float(mouse_x-original_mouse_x);
 		float dy = -float(mouse_y-original_mouse_y);
@@ -121,8 +121,8 @@ void LightSceneAnimator::update(double elapsed)
 	// Rotation:
 	if(num_rotation_axis != -1)
 	{
-		int mouse_x=0, mouse_y=0;
-		glfwGetMousePos(&mouse_x, &mouse_y);
+		double mouse_x=0, mouse_y=0;
+		glfwGetCursorPos(GLFWWindow::getInstance()->getWindow(), &mouse_x, &mouse_y);
 
 		float dx = +float(mouse_x-original_mouse_x);
 
@@ -130,22 +130,22 @@ void LightSceneAnimator::update(double elapsed)
 
 		vec3 direction(0.0);
 		direction[num_rotation_axis] = 1.0;
-		mat4 new_orientation = glm::gtc::matrix_transform::rotate(mat4(prev_orientation), angle, direction);
+		mat4 new_orientation = glm::rotate(mat4(prev_orientation), angle, direction);
 		lights[num_light]->setOrientation(mat3(new_orientation));
 
 		// Move the mouse to the left side if we went too to the right (and the other way around).
 		// We need to adjust original_mouse_x for this as well.
 		int w=0, h=0;
-		glfwGetWindowSize(&w, &h);
+		glfwGetFramebufferSize(GLFWWindow::getInstance()->getWindow(), &w, &h);
 		const int margin=20;
 		if(mouse_x > w-1-margin)
 		{
-			glfwSetMousePos(margin, mouse_y);
+			glfwSetCursorPos(GLFWWindow::getInstance()->getWindow(), margin, mouse_y);
 			original_mouse_x -= mouse_x;
 		}
 		else if(mouse_x < margin)
 		{
-			glfwSetMousePos(w-1-margin, mouse_y);
+			glfwSetCursorPos(GLFWWindow::getInstance()->getWindow(), w-1-margin, mouse_y);
 			original_mouse_x += (w-1-mouse_x);
 		}
 	}
@@ -198,7 +198,7 @@ void LightSceneAnimator::onMouseButtonEvent(int button, int action)
 		mouse_right_pressed = (action == GLFW_PRESS);
 
 		// Record original mouse position and original light position
-		glfwGetMousePos(&original_mouse_x, &original_mouse_y);
+		glfwGetCursorPos(GLFWWindow::getInstance()->getWindow(), &original_mouse_x, &original_mouse_y);
 		light_pos_before_drag = lights[num_light]->getPosition();
 	}
 }
@@ -226,7 +226,7 @@ void LightSceneAnimator::onKeyEvent(int key, int action)
 	if(key == GLFW_KEY_SPACE)
 		reset();
 
-	if(key == GLFW_KEY_LSHIFT)
+	if(key == GLFW_KEY_LEFT_SHIFT)
 	{
 		depth_mode = !depth_mode;
 		if(depth_mode)
@@ -257,7 +257,7 @@ void LightSceneAnimator::onKeyEvent(int key, int action)
 			prev_orientation = lights[num_light]->getOrientation();
 
 			// Record original mouse position and original light position
-			glfwGetMousePos(&original_mouse_x, &original_mouse_y);
+			glfwGetCursorPos(GLFWWindow::getInstance()->getWindow(), &original_mouse_x, &original_mouse_y);
 
 			num_rotation_axis = int(key-'X');
 		}

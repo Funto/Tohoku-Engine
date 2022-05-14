@@ -1,104 +1,56 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// OpenGL Mathematics Copyright (c) 2005 - 2009 G-Truc Creation (www.g-truc.net)
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Created : 2005-12-21
-// Updated : 2009-04-29
-// Licence : This source is under MIT License
-// File    : glm/gtx/transform.hpp
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Dependency:
-// - GLM core
-// - GLM_GTC_matric_transform
-///////////////////////////////////////////////////////////////////////////////////////////////////
+/// @ref gtx_transform
+/// @file glm/gtx/transform.hpp
+///
+/// @see core (dependence)
+/// @see gtc_matrix_transform (dependence)
+/// @see gtx_transform
+/// @see gtx_transform2
+///
+/// @defgroup gtx_transform GLM_GTX_transform
+/// @ingroup gtx
+///
+/// @brief Add transformation matrices
+///
+/// <glm/gtx/transform.hpp> need to be included to use these functionalities.
 
-#ifndef glm_gtx_transform
-#define glm_gtx_transform
+#pragma once
 
 // Dependency:
 #include "../glm.hpp"
 #include "../gtc/matrix_transform.hpp"
 
+#if GLM_MESSAGES == GLM_MESSAGES_ENABLED && !defined(GLM_EXT_INCLUDED)
+#	pragma message("GLM: GLM_GTX_transform extension included")
+#endif
+
 namespace glm
 {
-	namespace test{
-		void main_gtx_transform();
-	}//namespace test
+	/// @addtogroup gtx_transform
+	/// @{
 
-	namespace gtx{
-	//! GLM_GTX_transform extension: Add transformation matrices
-	namespace transform
-	{
-		using namespace gtc::matrix_transform; 
+	/// Transforms a matrix with a translation 4 * 4 matrix created from 3 scalars.
+	/// @see gtc_matrix_transform
+	/// @see gtx_transform
+	template <typename T, precision P>
+	GLM_FUNC_DECL tmat4x4<T, P> translate(
+		tvec3<T, P> const & v);
 
-		//! Builds a translation 4 * 4 matrix created from 3 scalars.
-		//! From GLM_GTX_transform extension.
-		template <typename T> 
-		detail::tmat4x4<T> translate(
-			T x, T y, T z);
-		
-		//! Transforms a matrix with a translation 4 * 4 matrix created from 3 scalars. 
-		//! From GLM_GTX_transform extension.
-		template <typename T> 
-		detail::tmat4x4<T> translate(
-			detail::tmat4x4<T> const & m, 
-			T x, T y, T z);
-		
-		//! Transforms a matrix with a translation 4 * 4 matrix created from 3 scalars. 
-		//! From GLM_GTX_transform extension.
-		template <typename T> 
-		detail::tmat4x4<T> translate(
-			detail::tvec3<T> const & v);
+	/// Builds a rotation 4 * 4 matrix created from an axis of 3 scalars and an angle expressed in radians. 
+	/// @see gtc_matrix_transform
+	/// @see gtx_transform
+	template <typename T, precision P>
+	GLM_FUNC_DECL tmat4x4<T, P> rotate(
+		T angle, 
+		tvec3<T, P> const & v);
 
-		//! Builds a rotation 4 * 4 matrix created from an axis of 3 scalars and an angle expressed in degrees. 
-		//! From GLM_GTX_transform extension.
-		template <typename T> 
-		detail::tmat4x4<T> rotate(
-			T angle, 
-			T x, T y, T z);
+	/// Transforms a matrix with a scale 4 * 4 matrix created from a vector of 3 components.
+	/// @see gtc_matrix_transform
+	/// @see gtx_transform
+	template <typename T, precision P>
+	GLM_FUNC_DECL tmat4x4<T, P> scale(
+		tvec3<T, P> const & v);
 
-		//! Builds a rotation 4 * 4 matrix created from an axis of 3 scalars and an angle expressed in degrees. 
-		//! From GLM_GTX_transform extension.
-		template <typename T> 
-		detail::tmat4x4<T> rotate(
-			T angle, 
-			detail::tvec3<T> const & v);
-
-		//! Transforms a matrix with a rotation 4 * 4 matrix created from an axis of 3 scalars and an angle expressed in degrees. 
-		//! From GLM_GTX_transform extension.
-		template <typename T> 
-		detail::tmat4x4<T> rotate(
-			detail::tmat4x4<T> const & m, 
-			T angle, 
-			T x, T y, T z);
-		
-		//! Builds a scale 4 * 4 matrix created from 3 scalars. 
-		//! From GLM_GTX_transform extension.
-		template <typename T> 
-		detail::tmat4x4<T> scale(
-			T x, T y, T z);
-		
-		//! Transforms a matrix with a scale 4 * 4 matrix created from 3 scalars.
-		//! From GLM_GTX_transform extension.
-		template <typename T> 
-		detail::tmat4x4<T> scale(
-			detail::tmat4x4<T> const & m, 
-			T x, T y, T z);
-
-		//! Transforms a matrix with a scale 4 * 4 matrix created from a vector of 3 components.
-		//! From GLM_GTX_transform extension.
-		template <typename T> 
-		detail::tmat4x4<T> scale(
-			detail::tvec3<T> const & v);
-
-	}//namespace transform
-	}//namespace gtx
-}//namespace glm
-
-#define GLM_GTX_transform namespace gtx::transform
-#ifndef GLM_GTX_GLOBAL
-namespace glm {using GLM_GTX_transform;}
-#endif//GLM_GTX_GLOBAL
+	/// @}
+}// namespace glm
 
 #include "transform.inl"
-
-#endif//glm_gtx_transform

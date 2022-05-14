@@ -1,86 +1,91 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// OpenGL Mathematics Copyright (c) 2005 - 2009 G-Truc Creation (www.g-truc.net)
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Created : 2006-01-09
-// Updated : 2006-11-13
-// Licence : This source is under MIT License
-// File    : glm/gtx/fast_exponential.hpp
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Dependency:
-// - GLM core
-// - GLM_GTX_half
-// - GLM_GTX_double
-///////////////////////////////////////////////////////////////////////////////////////////////////
+/// @ref gtx_fast_exponential
+/// @file glm/gtx/fast_exponential.hpp
+///
+/// @see core (dependence)
+/// @see gtx_half_float (dependence)
+///
+/// @defgroup gtx_fast_exponential GLM_GTX_fast_exponential
+/// @ingroup gtx
+///
+/// @brief Fast but less accurate implementations of exponential based functions.
+///
+/// <glm/gtx/fast_exponential.hpp> need to be included to use these functionalities.
 
-#ifndef glm_gtx_fast_exponential
-#define glm_gtx_fast_exponential
+#pragma once
 
 // Dependency:
 #include "../glm.hpp"
-#include "../gtc/half_float.hpp"
-#include "../gtc/double_float.hpp"
+
+#if GLM_MESSAGES == GLM_MESSAGES_ENABLED && !defined(GLM_EXT_INCLUDED)
+#	pragma message("GLM: GLM_GTX_fast_exponential extension included")
+#endif
 
 namespace glm
 {
-   	namespace test{
-		void main_gtx_fast_exponential();
-	}//namespace test
+	/// @addtogroup gtx_fast_exponential
+	/// @{
 
-	namespace gtx{
-	//! GLM_GTX_fast_exponential extension: Fast but less accurate implementations of exponential based functions.
-	namespace fast_exponential
-	{
-		using namespace gtc::half_float;
-		using namespace gtc::double_float;
+	/// Faster than the common pow function but less accurate.
+	/// @see gtx_fast_exponential
+	template <typename genType>
+	GLM_FUNC_DECL genType fastPow(genType x, genType y);
 
-		//! Faster than the common pow function but less accurate.
-		//! From GLM_GTX_fast_exponential extension.
-		template <typename valType> 
-		valType fastPow(
-			valType const & x, 
-			valType const & y);
+	/// Faster than the common pow function but less accurate.
+	/// @see gtx_fast_exponential
+	template <typename T, precision P, template <typename, precision> class vecType>
+	GLM_FUNC_DECL vecType<T, P> fastPow(vecType<T, P> const & x, vecType<T, P> const & y);
 
-		//! Faster than the common pow function but less accurate.
-		//! From GLM_GTX_fast_exponential extension.
-		template <typename T, typename U> 
-		T fastPow(
-			const T& x, 
-			const U& y);
-		
-		//! Faster than the common exp function but less accurate.
-		//! From GLM_GTX_fast_exponential extension.
-		template <typename T> 
-		T fastExp(const T& x);
-		
-		//! Faster than the common log function but less accurate.
-		//! From GLM_GTX_fast_exponential extension.
-		template <typename T> 
-		T fastLog(const T& x);
+	/// Faster than the common pow function but less accurate.
+	/// @see gtx_fast_exponential
+	template <typename genTypeT, typename genTypeU>
+	GLM_FUNC_DECL genTypeT fastPow(genTypeT x, genTypeU y);
 
-		//! Faster than the common exp2 function but less accurate.
-		//! From GLM_GTX_fast_exponential extension.
-		template <typename T> 
-		T fastExp2(const T& x);
-		
-		//! Faster than the common log2 function but less accurate.
-		//! From GLM_GTX_fast_exponential extension.
-		template <typename T> 
-		T fastLog2(const T& x);
+	/// Faster than the common pow function but less accurate.
+	/// @see gtx_fast_exponential
+	template <typename T, precision P, template <typename, precision> class vecType>
+	GLM_FUNC_DECL vecType<T, P> fastPow(vecType<T, P> const & x);
 
-		//! Faster than the common ln function but less accurate.
-		//! From GLM_GTX_fast_exponential extension.
-		template <typename T> 
-		T fastLn(const T& x);
+	/// Faster than the common exp function but less accurate.
+	/// @see gtx_fast_exponential
+	template <typename T>
+	GLM_FUNC_DECL T fastExp(T x);
 
-	}//namespace fast_exponential
-	}//namespace gtx
+	/// Faster than the common exp function but less accurate.
+	/// @see gtx_fast_exponential
+	template <typename T, precision P, template <typename, precision> class vecType>
+	GLM_FUNC_DECL vecType<T, P> fastExp(vecType<T, P> const & x);
+
+	/// Faster than the common log function but less accurate.
+	/// @see gtx_fast_exponential
+	template <typename T>
+	GLM_FUNC_DECL T fastLog(T x);
+
+	/// Faster than the common exp2 function but less accurate.
+	/// @see gtx_fast_exponential
+	template <typename T, precision P, template <typename, precision> class vecType>
+	GLM_FUNC_DECL vecType<T, P> fastLog(vecType<T, P> const & x);
+
+	/// Faster than the common exp2 function but less accurate.
+	/// @see gtx_fast_exponential
+	template <typename T>
+	GLM_FUNC_DECL T fastExp2(T x);
+
+	/// Faster than the common exp2 function but less accurate.
+	/// @see gtx_fast_exponential
+	template <typename T, precision P, template <typename, precision> class vecType>
+	GLM_FUNC_DECL vecType<T, P> fastExp2(vecType<T, P> const & x);
+
+	/// Faster than the common log2 function but less accurate.
+	/// @see gtx_fast_exponential
+	template <typename T>
+	GLM_FUNC_DECL T fastLog2(T x);
+
+	/// Faster than the common log2 function but less accurate.
+	/// @see gtx_fast_exponential
+	template <typename T, precision P, template <typename, precision> class vecType>
+	GLM_FUNC_DECL vecType<T, P> fastLog2(vecType<T, P> const & x);
+
+	/// @}
 }//namespace glm
 
-#define GLM_GTX_fast_exponential namespace gtx::fast_exponential
-#ifndef GLM_GTX_GLOBAL
-namespace glm {using GLM_GTX_fast_exponential;}
-#endif//GLM_GTX_GLOBAL
-
 #include "fast_exponential.inl"
-
-#endif//glm_gtx_fast_exponential

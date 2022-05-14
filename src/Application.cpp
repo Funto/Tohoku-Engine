@@ -161,7 +161,7 @@ void Application::updateWinTitle(double render_time)
 			<< " | " << scene_name
 			<< " | " << render_time << "s/frame";
 
-	glfwSetWindowTitle(ss.str().c_str());
+	glfwSetWindowTitle(GLFWWindow::getInstance()->getWindow(), ss.str().c_str());
 	ss.str("");
 }
 
@@ -275,7 +275,8 @@ void Application::createRenderers()
 									   BRDF_FUNCTION,
 									   KERNEL_FILENAME,
 									   NB_DEPTH_LAYERS));
-	
+
+#if 0
 	// 6: My own technique renderer:
 	renderers.push_back(new MyRenderer2(WIN_WIDTH,
 									   WIN_HEIGHT,
@@ -284,6 +285,7 @@ void Application::createRenderers()
 									   USE_VISIBILITY_MAPS,
 									   BRDF_FUNCTION,
 									   KERNEL_FILENAME));
+#endif
 
 #ifdef CREATE_CPU_RAYTRACER
 	// 7: Simple CPU raytracer:

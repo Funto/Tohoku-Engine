@@ -1,3 +1,14 @@
 .vs
 visualc/renderer/Debug
 *.vcxproj.user
+*.tlog
+*.lastbuildstate
+*.obj
+*.iobj
+*.ipdb
+*.log
+*.pdb
+*.recipe
+*.vcxproj.FileListAbsolute.txt
+visualc/renderer/bin/*.exe
+visualc/renderer/bin/*.pdb
